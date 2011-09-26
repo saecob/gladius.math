@@ -550,6 +550,14 @@ var _Math = function( options ) {
 
         // @cjcliffe: Transform-related functions should go here.
 
+        translate: undefined,
+
+        rotatate: undefined,
+
+        scale: undefined,
+
+        lookAt: undefined
+
     };
 
 }  

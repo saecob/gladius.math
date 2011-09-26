@@ -422,9 +422,9 @@ var _Math = function( options ) {
     this.Matrix4 = function() {
         if( 0 === arguments.length )
             return Matrix( 16, [0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0] );
+                                0, 0, 0, 0,
+                                0, 0, 0, 0,
+                                0, 0, 0, 0] );
         else
             return Matrix( 16, arguments );
     };
@@ -545,6 +545,12 @@ var _Math = function( options ) {
             return _matrix4_identity;
         }
     });
+
+    this.transform = {
+
+        // @cjcliffe: Transform-related functions should go here.
+
+    };
 
 }  
 

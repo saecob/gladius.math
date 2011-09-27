@@ -155,9 +155,10 @@ var _Math = function( options ) {
             multiply: function( v, s ) {
                 var r = new that.Vector2( v );
 
-                for( var i = 0; i < 2; ++ i )
+                for( var i = 0; i < 2; ++ i ) {
                     r[i] *= s;
-
+                }
+                
                 return r;
             },
 
@@ -231,7 +232,7 @@ var _Math = function( options ) {
             },
 
             multiply: function( v, s ) {
-                  return [v[0] * s, v1[1] * s, v1[2] * s];
+                  return [v[0] * s, v[1] * s, v[2] * s];
             },
 
             imultiply: vector.imultiply,
@@ -280,7 +281,7 @@ var _Math = function( options ) {
             },
 
             multiply: function( v, s ) {
-                return [v[0] * s, v1[1] * s, v1[2] * s, v1[3] * s];
+                return [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
             },
 
             imultiply: vector.imultiply,

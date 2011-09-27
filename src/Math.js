@@ -926,5 +926,3 @@ var _Math = function( options ) {
   }
 
 }  
-
-window.math = new _Math();

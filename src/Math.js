@@ -232,7 +232,33 @@ var _Math = function( options ) {
             },
 
             multiply: function( v, s ) {
-                  return [v[0] * s, v[1] * s, v[2] * s];
+                if (s.length === 16 ) {
+                    return that.vector3.multiply_matrix4(v,s);
+                } else if (s.length === 9 ) {
+                    return that.vector3.multiply_matrix3(v,s);
+                }
+
+                return [v[0] * s, v[1] * s, v[2] * s];
+            },
+
+            multiply_matrix3: function(v, m, out) {
+                out = out||[];
+
+                out[0] = m[0] * v[0] + m[3] * v[1] + m[6] * v[2];
+                out[1] = m[1] * v[0] + m[4] * v[1] + m[7] * v[2];
+                out[2] = m[2] * v[0] + m[5] * v[1] + m[8] * v[2];
+
+                return out;
+            },
+
+            multiply_matrix4: function (v, m, out) {
+                out = out||[];
+
+                out[0] = m2[0] * m1[0] + m2[4] * m1[1] + m2[8] * m1[2] + m2[12];
+                out[1] = m2[1] * m1[0] + m2[5] * m1[1] + m2[9] * m1[2] + m2[13];
+                out[2] = m2[2] * m1[0] + m2[6] * m1[1] + m2[10] * m1[2] + m2[14];
+
+                return out;
             },
 
             imultiply: vector.imultiply,
@@ -281,10 +307,24 @@ var _Math = function( options ) {
             },
 
             multiply: function( v, s ) {
+                if (s.length === 16 ) {
+                    return that.vector4.multiply_matrix4(v,s);
+                }
                 return [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
             },
 
             imultiply: vector.imultiply,
+            
+            multiply_matrix4: function( v, m, out ) {
+                out = out || [];
+
+                out[0] = m[0]*v[0]+ m[4]*v[1]+ m[8]*v[2]+ m[12]*v[3];
+                out[1] = m[1]*v[0]+ m[5]*v[1]+ m[9]*v[2]+ m[13]*v[3];
+                out[2] = m[2]*v[0]+ m[6]*v[1]+ m[10]*v[2]+ m[14]*v[3];
+                out[3] = m[3]*v[0]+ m[7]*v[1]+ m[11]*v[2]+ m[15]*v[3];
+
+                return out;
+            },
 
             normalize: function( v ) {
                 var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
@@ -448,7 +488,7 @@ var _Math = function( options ) {
     this.matrix2 = {
         translate: function() {
             if( 0 === arguments.length ) {
-                return Matrix( 4, that.matrix3.identity );
+                return Matrix( 4, that.matrix2.identity );
             } else if( 1 === arguments.length ) {
                 var v = arguments[0];
                 var x = v[0],
@@ -463,7 +503,7 @@ var _Math = function( options ) {
         // Construct a 2x2 scale matrix from a Vector3.
         scale: function() {
             if( 0 === arguments.length ) {
-                return Matrix( 4, that.matrix3.identity );
+                return Matrix( 4, that.matrix2.identity );
             } else if( 1 === arguments.length ) {
                 var v = arguments[0];
                 var x = v[0],
@@ -563,7 +603,35 @@ var _Math = function( options ) {
             } else {
                 return Matrix( 9, arguments );
             }
-        }   
+        },
+
+        transpose: function(mat_in) {
+            var mat = mat_in.slice(0);
+            var a01 = mat[1], a02 = mat[2], a12 = mat[5];
+
+            mat[1] = mat[3];
+            mat[2] = mat[6];
+            mat[3] = a01;
+            mat[5] = mat[7];
+            mat[6] = a02;
+            mat[7] = a12;
+            
+            return mat;
+        },
+        
+        // perform a quick transpose of a 3x3 on the original matrix
+        transpose_inline: function(mat) {
+            var a01 = mat[1], a02 = mat[2], a12 = mat[5];
+
+            mat[1] = mat[3];
+            mat[2] = mat[6];
+            mat[3] = a01;
+            mat[5] = mat[7];
+            mat[6] = a02;
+            mat[7] = a12;
+            
+            return mat;
+        }        
     };
 
     this.Matrix4 = function() {
@@ -800,6 +868,40 @@ var _Math = function( options ) {
           }
 
           return null; 
+        },
+
+        // return inverse 3x3, better performance than using 4x4 for normal matrix
+        inverse_matrix3: function(mat) {
+          var dest = [];
+
+          var a00 = mat[0], a01 = mat[1], a02 = mat[2],
+          a10 = mat[4], a11 = mat[5], a12 = mat[6],
+          a20 = mat[8], a21 = mat[9], a22 = mat[10];
+
+          var b01 = a22*a11-a12*a21,
+          b11 = -a22*a10+a12*a20,
+          b21 = a21*a10-a11*a20;
+
+          var d = a00*b01 + a01*b11 + a02*b21;
+          if (!d) { return null; }
+          var id = 1/d;
+
+          dest[0] = b01*id;
+          dest[1] = (-a22*a01 + a02*a21)*id;
+          dest[2] = (a12*a01 - a02*a11)*id;
+          dest[3] = b11*id;
+          dest[4] = (a22*a00 - a02*a20)*id;
+          dest[5] = (-a12*a00 + a02*a10)*id;
+          dest[6] = b21*id;
+          dest[7] = (-a21*a00 + a01*a20)*id;
+          dest[8] = (a11*a00 - a01*a10)*id;
+
+          return dest;
+        },       
+        
+        // efficient transposed inverse 3x3 of a 4x4 matrix
+        normal_matrix3: function(m) {
+           return that.matrix3.transpose_inline(that.matrix4.inverse_matrix3(this.mvMatrix));
         }
     };
     

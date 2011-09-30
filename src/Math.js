@@ -511,7 +511,7 @@ var _Math = function( options ) {
                 var x = v[0],
                     y = v[1];
 				return Matrix(4, [x, 0,
-								  0, y];
+								  0, y]);
 //  			return Matrix( 4, [] );
             // Test                
             } else {

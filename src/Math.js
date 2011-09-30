@@ -493,8 +493,10 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-//                return Matrix( 4, [] );
-            // TODO                
+				return Matrix( 4, [1,x,
+								   0,y] );
+//				return Matrix( 4, [] );
+			//	Test
             } else {
                 return Matrix( 4, arguments );       
             }
@@ -508,8 +510,10 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-//                return Matrix( 4, [] );
-            // TODO                
+				return Matrix(4, [x, 0,
+								  0, y];
+//  			return Matrix( 4, [] );
+            // Test                
             } else {
                 return Matrix( 4, arguments );
             }
@@ -522,14 +526,15 @@ var _Math = function( options ) {
             } else if( 1 === arguments.length ) {
                 var v = arguments[0];
                 var r = v[0];
-//                return Matrix( 4, [] );
+//              return Matrix( 4, [] );
+			// Todo (Quaternion = w + xi + yj + zk)
             } else {
                 return Matrix( 4, arguments );
             }
         }
     };
     
-
+// add & subtract functions for 3 x 3?
     this.Matrix3 = function() {
         if( 0 === arguments.length ) {
             return Matrix( 9, [0, 0, 0,
@@ -544,16 +549,28 @@ var _Math = function( options ) {
     
          multiply: function( m1, m2 ) {
             var r = new that.Matrix3();
-            
-            // TODO                
-                
+			
+            r = [m1[1]*m2[1] + m1[2]*m2[4] + m1[3]*m2[7], // 1, 2, 3
+				 m1[1]*m2[2] + m1[2]*m2[5] + m1[3]*m2[8], 
+				 m1[1]*m2[3] + m1[2]*m2[6] + m1[3]*m2[9],
+			
+				 m1[4]*m2[1] + m1[5]*m2[4] + m1[6]*m2[7], 
+				 m1[4]*m2[2] + m1[5]*m2[5] + m1[6]*m2[8], // 4, 5, 6
+				 m1[4]*m2[3] + m1[5]*m2[6] + m1[6]*m2[9],
+				 
+				 m1[7]*m2[1] + m1[8]*m2[4] + m1[9]*m2[7], 
+				 m1[7]*m2[2] + m1[8]*m2[5] + m1[9]*m2[8],
+				 m1[7]*m2[3] + m1[8]*m2[6] + m1[9]*m2[9]];// 7, 8, 9
+//			Test
+
             return r;
         },
         
         imultiply: function( m1, m2 ) {
             var r = new that.Matrix3( m1 );
             
-            // TODO                
+			// Logic (?)
+//			TODO                
                 
             return r;
         },
@@ -654,7 +671,8 @@ var _Math = function( options ) {
 
         multiply: function( m1, m2 ) {
             var r = new that.Matrix4();
-            
+			
+//			Where are a and b defined?
             r[0] = a[0]*b[0] + a[1]*b[4] + a[2]*b[8] + a[3]*b[12];
             r[1] = a[0]*b[1] + a[1]*b[5] + a[2]*b[9] + a[3]*b[13];
             r[2] = a[0]*b[2] + a[1]*b[6] + a[2]*b[10] + a[3]*b[14];
@@ -677,7 +695,8 @@ var _Math = function( options ) {
         
         imultiply: function( m1, m2 ) {
             var r = new that.Matrix4( m1 );
-            
+			
+//			Where are a and b defined?            
             r[0] = a[0]*b[0] + a[1]*b[4] + a[2]*b[8] + a[3]*b[12];
             r[1] = a[0]*b[1] + a[1]*b[5] + a[2]*b[9] + a[3]*b[13];
             r[2] = a[0]*b[2] + a[1]*b[6] + a[2]*b[10] + a[3]*b[14];
@@ -762,8 +781,8 @@ var _Math = function( options ) {
                 var x = v[0],
                     y = v[1],
                     z = v[2];
-            // TODO
 //                return Matrix( 16, [] );
+			// TODO
             } else {
                 return Matrix( 16, arguments );
             }

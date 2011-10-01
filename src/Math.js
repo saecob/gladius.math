@@ -16,7 +16,9 @@ var _Math = function( options ) {
             Float32: Float32Array,
             Float64: Float64Array
     };
-    const FLOAT_ARRAY_TYPE = FLOAT_ARRAY_ENUM.Float32;
+	
+	// const type
+    var FLOAT_ARRAY_TYPE = FLOAT_ARRAY_ENUM.Float32;
 
     Object.defineProperty( this, 'ARRAY_TYPE', {
         get: function() {
@@ -50,7 +52,7 @@ var _Math = function( options ) {
                 'v1 and v2 must have the same number of components' );
 
                 for( var i = 0; i < v1.length; ++ i ) {
-                    v1[i] += v2[i]
+                    v1[i] += v2[i];
                 }
                 
                 return v1;
@@ -82,7 +84,7 @@ var _Math = function( options ) {
                     v[i] *= s;
                 }
                 
-                return v
+                return v;
             },
 
             isubtract: function( v1, v2 ) {
@@ -379,15 +381,25 @@ var _Math = function( options ) {
             }
 
     };
+	
+	// const types
+    // const _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
+    // const _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
+    // const _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
+    // const _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
+    // const _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
+    // const _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
+	var _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
+    var _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
+    var _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
+    var _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
+    var _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
+    var _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
 
-    const _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    const _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    const _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    const _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    const _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    const _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
-
-    const _vector2_x = _x.subarray( 0, 2 );
+	//const types
+    //const _vector2_x = _x.subarray( 0, 2 );
+	var _vector2_x = _x.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'x', {
         get: function() {
             return _vector2_x;
@@ -398,9 +410,12 @@ var _Math = function( options ) {
             return _vector2_x;
         }
     });
-
-    const _vector2_y = _y.subarray( 0, 2 );
-    Object.defineProperty( this.vector2, 'y', {
+	
+	//const types
+    //const _vector2_y = _y.subarray( 0, 2 );
+	var _vector2_y = _y.subarray( 0, 2 );
+    
+	Object.defineProperty( this.vector2, 'y', {
         get: function() {
             return _vector2_y;
         }
@@ -411,21 +426,27 @@ var _Math = function( options ) {
         }
     });
 
-    const _vector2_0 = _0.subarray( 0, 2 );
+	//const types
+    //const _vector2_0 = _0.subarray( 0, 2 );
+	var _vector2_0 = _0.subarray( 0, 2 );
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
             return _vector2_0;
         }
     });
 
-    const _vector2_1 = _1.subarray( 0, 2 );
+	//const types
+    //const _vector2_1 = _1.subarray( 0, 2 );
+	var _vector2_1 = _1.subarray( 0, 2 );
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
             return _vector2_1;
         }
     });
     
-    const _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
+	//const types
+    //const _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
+	var _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
             return _quaternion_identity;
@@ -500,8 +521,8 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-				return Matrix( 4, [1,x,
-								   0,y] );
+				return Matrix( 4, [1 , x,
+								   0 , y] );
 //				return Matrix( 4, [] );
 			//	Test
             } else {
@@ -517,9 +538,9 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-				return Matrix(4, [x, 0,
-								  0, y]);
-//  			return Matrix( 4, [] );
+				return Matrix( 4, [x, 0,
+								   0, y] );
+//				return Matrix( 4, [] );
             // Test                
             } else {
                 return Matrix( 4, arguments );
@@ -936,15 +957,19 @@ var _Math = function( options ) {
         }
     };
     
-    const _matrix4_identity = new this.Matrix4( [1, 0, 0, 0,
+	// const type
+    var _matrix4_identity = new this.Matrix4( [1, 0, 0, 0,
                                                  0, 1, 0, 0,
                                                  0, 0, 1, 0,
                                                  0, 0, 0, 1]);
-    const _matrix3_identity = new this.Matrix3( [1, 0, 0,
+												 
+	// const type
+    var _matrix3_identity = new this.Matrix3( [1, 0, 0,
                                                  0, 1, 0,
                                                  0, 0, 1,
                                                  0, 0, 0]);
-    const _matrix2_identity = new this.Matrix2( [1, 0,
+	// const type
+    var _matrix2_identity = new this.Matrix2( [1, 0,
                                                  0, 1]);
  
  //	Test
@@ -974,7 +999,7 @@ var _Math = function( options ) {
     this.Transform = function(mtype,initial) {
         this.mtype = mtype;
         this.clearStack(initial);
-    }
+    };
     
     this.Transform.prototype = {
 
@@ -1062,6 +1087,6 @@ var _Math = function( options ) {
 
         this.invalidateTop();
     }
-  }
+  };
 
-}  
+};

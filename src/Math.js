@@ -439,13 +439,14 @@ var _Math = function( options ) {
         } else {
             elements = args;
         }
-
+		
         assert( elements.length >= dim,
                 'Invalid number of elements: ' + args.length );
+				//'args: ' + args[0] + args[1] + ' len: ' + args.length + ' || elements: ' + elements[0] + elements[1] + ' len: ' + elements.length + ' dim ' + dim);
 
         var matrix = new FLOAT_ARRAY_TYPE( dim );
         for( var i = 0; i < dim; ++ i ) {
-            vector[i] = elements[i];
+            matrix[i] = elements[i];
         }
         
         return matrix;
@@ -475,7 +476,8 @@ var _Math = function( options ) {
         }
         
     };
-
+	
+	//Constructor
     this.Matrix2 = function() {
         if( 0 === arguments.length ) {
             return Matrix( 4, [0, 0,
@@ -486,6 +488,11 @@ var _Math = function( options ) {
     };
     
     this.matrix2 = {
+	
+		clear: matrix.clear,
+        
+        equal: matrix.equal,
+		
         translate: function() {
             if( 0 === arguments.length ) {
                 return Matrix( 4, that.matrix2.identity );
@@ -546,7 +553,12 @@ var _Math = function( options ) {
     };
     
     this.matrix3 = {
-    
+		
+		// All matrixies should have these
+		clear: matrix.clear,
+        
+        equal: matrix.equal,
+		
          multiply: function( m1, m2 ) {
             var r = new that.Matrix3();
 			
@@ -935,21 +947,26 @@ var _Math = function( options ) {
     const _matrix2_identity = new this.Matrix2( [1, 0,
                                                  0, 1]);
  
+ //	Test
+ // Do we need ...identity.slice(0); ?
     Object.defineProperty( this.matrix4, 'identity', {
         get: function() {
-            return _matrix4_identity.slice(0);
+            //return _matrix4_identity.slice(0);
+			return _matrix4_identity;
         }
     });
 
     Object.defineProperty( this.matrix3, 'identity', {
         get: function() {
-            return _matrix3_identity.slice(0);
+            //return _matrix3_identity.slice(0);
+			return _matrix3_identity;
         }
     });
 
     Object.defineProperty( this.matrix2, 'identity', {
         get: function() {
-            return _matrix2_identity.slice(0);
+            //return _matrix2_identity.slice(0);
+			return _matrix2_identity;
         }
     });
     

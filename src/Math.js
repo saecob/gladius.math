@@ -382,22 +382,15 @@ var _Math = function( options ) {
 
     };
 	
-	// const types
-    // const _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    // const _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    // const _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    // const _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    // const _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    // const _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
-	var _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    var _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    var _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    var _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    var _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    var _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
+	// const types, removed 'new' keyword
+	var _x = this.Vector4( 1.0, 0.0, 0.0, 0.0 );
+    var _y = this.Vector4( 0.0, 1.0, 0.0, 0.0 );
+    var _z = this.Vector4( 0.0, 0.0, 1.0, 0.0 );
+    var _w = this.Vector4( 0.0, 0.0, 0.0, 1.0 );
+    var _0 = this.Vector4( 0.0, 0.0, 0.0, 0.0 );
+    var _1 = this.Vector4( 1.0, 1.0, 1.0, 1.0 );
 
 	//const types
-    //const _vector2_x = _x.subarray( 0, 2 );
 	var _vector2_x = _x.subarray( 0, 2 );
 	
     Object.defineProperty( this.vector2, 'x', {
@@ -412,7 +405,6 @@ var _Math = function( options ) {
     });
 	
 	//const types
-    //const _vector2_y = _y.subarray( 0, 2 );
 	var _vector2_y = _y.subarray( 0, 2 );
     
 	Object.defineProperty( this.vector2, 'y', {
@@ -427,8 +419,8 @@ var _Math = function( options ) {
     });
 
 	//const types
-    //const _vector2_0 = _0.subarray( 0, 2 );
 	var _vector2_0 = _0.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
             return _vector2_0;
@@ -436,17 +428,17 @@ var _Math = function( options ) {
     });
 
 	//const types
-    //const _vector2_1 = _1.subarray( 0, 2 );
 	var _vector2_1 = _1.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
             return _vector2_1;
         }
     });
     
-	//const types
-    //const _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
-	var _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
+	//const types, removed 'new' keyword
+	var _quaternion_identity = this.Quaternion( 0, 0, 0, 1 );
+	
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
             return _quaternion_identity;
@@ -463,7 +455,6 @@ var _Math = function( options ) {
 		
         assert( elements.length >= dim,
                 'Invalid number of elements: ' + args.length );
-				//'args: ' + args[0] + args[1] + ' len: ' + args.length + ' || elements: ' + elements[0] + elements[1] + ' len: ' + elements.length + ' dim ' + dim);
 
         var matrix = new FLOAT_ARRAY_TYPE( dim );
         for( var i = 0; i < dim; ++ i ) {
@@ -797,9 +788,9 @@ var _Math = function( options ) {
                     z = v[2],
                     w = v[3];
                 return Matrix( 16, [1 - 2*y*y - 2*z*z, 2*x*y - 2*w*z, 2*x*z + 2*w*y, 0,
-                                    2*x*y + 2*w*z, 1-2*x*x - 2*x*x, 2*y*z + 2*w*x, 0,
-                                    2*x*z - 2*w*y, 2*y*z - 2*w*x, 1-2*x*x - 2*y*y, 0,
-                                    0, 0, 0, 1] );
+									2*x*y + 2*w*z, 1-2*x*x - 2*x*x, 2*y*z + 2*w*x, 0,
+									2*x*z - 2*w*y, 2*y*z - 2*w*x, 1-2*x*x - 2*y*y, 0,
+									0, 0, 0, 1] );
             } else {
                 return Matrix( 16, arguments );
             }
@@ -957,26 +948,25 @@ var _Math = function( options ) {
         }
     };
     
-	// const type
-    var _matrix4_identity = new this.Matrix4( [1, 0, 0, 0,
-                                                 0, 1, 0, 0,
-                                                 0, 0, 1, 0,
-                                                 0, 0, 0, 1]);
+	// const type (removed 'new' keyword)
+    var _matrix4_identity = this.Matrix4( [1, 0, 0, 0,
+                                           0, 1, 0, 0,
+                                           0, 0, 1, 0,
+                                           0, 0, 0, 1]);
 												 
-	// const type
-    var _matrix3_identity = new this.Matrix3( [1, 0, 0,
-                                                 0, 1, 0,
-                                                 0, 0, 1,
-                                                 0, 0, 0]);
-	// const type
-    var _matrix2_identity = new this.Matrix2( [1, 0,
-                                                 0, 1]);
+	// const type (removed 'new' keyword)
+    var _matrix3_identity = this.Matrix3( [1, 0, 0,
+                                           0, 1, 0,
+                                           0, 0, 1,
+                                           0, 0, 0]);
+	// const type (removed 'new' keyword)
+    var _matrix2_identity = this.Matrix2( [1, 0,
+                                           0, 1]);
  
- //	Test
- // Do we need ...identity.slice(0); ?
+	//slice() seems to break tests, also not used for any other constant
     Object.defineProperty( this.matrix4, 'identity', {
         get: function() {
-            //return _matrix4_identity.slice(0);
+			//return _matrix4_identity.slice(0);
 			return _matrix4_identity;
         }
     });

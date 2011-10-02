@@ -61,9 +61,9 @@
         expect( 1 );
 
         deepEqual(
-                math.matrix2.identity,
-				new math.Matrix2( [1, 0, 0, 1] ),
-                'Matrix 2 identity - [1,0,0,1]'
+                new math.Matrix2( [1, 0, 0, 1] ),				
+				math.matrix2.identity,
+                'Matrix is identity matrix'
         );
     });
 

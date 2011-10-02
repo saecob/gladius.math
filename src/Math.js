@@ -16,7 +16,9 @@ var _Math = function( options ) {
             Float32: Float32Array,
             Float64: Float64Array
     };
-    const FLOAT_ARRAY_TYPE = FLOAT_ARRAY_ENUM.Float32;
+	
+	// const type
+    var FLOAT_ARRAY_TYPE = FLOAT_ARRAY_ENUM.Float32;
 
     Object.defineProperty( this, 'ARRAY_TYPE', {
         get: function() {
@@ -50,7 +52,7 @@ var _Math = function( options ) {
                 'v1 and v2 must have the same number of components' );
 
                 for( var i = 0; i < v1.length; ++ i ) {
-                    v1[i] += v2[i]
+                    v1[i] += v2[i];
                 }
                 
                 return v1;
@@ -82,7 +84,7 @@ var _Math = function( options ) {
                     v[i] *= s;
                 }
                 
-                return v
+                return v;
             },
 
             isubtract: function( v1, v2 ) {
@@ -379,15 +381,18 @@ var _Math = function( options ) {
             }
 
     };
+	
+	// const types, removed 'new' keyword
+	var _x = this.Vector4( 1.0, 0.0, 0.0, 0.0 );
+    var _y = this.Vector4( 0.0, 1.0, 0.0, 0.0 );
+    var _z = this.Vector4( 0.0, 0.0, 1.0, 0.0 );
+    var _w = this.Vector4( 0.0, 0.0, 0.0, 1.0 );
+    var _0 = this.Vector4( 0.0, 0.0, 0.0, 0.0 );
+    var _1 = this.Vector4( 1.0, 1.0, 1.0, 1.0 );
 
-    const _x = new this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    const _y = new this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    const _z = new this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    const _w = new this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    const _0 = new this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    const _1 = new this.Vector4( 1.0, 1.0, 1.0, 1.0 );
-
-    const _vector2_x = _x.subarray( 0, 2 );
+	//const types
+	var _vector2_x = _x.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'x', {
         get: function() {
             return _vector2_x;
@@ -398,9 +403,11 @@ var _Math = function( options ) {
             return _vector2_x;
         }
     });
-
-    const _vector2_y = _y.subarray( 0, 2 );
-    Object.defineProperty( this.vector2, 'y', {
+	
+	//const types
+	var _vector2_y = _y.subarray( 0, 2 );
+    
+	Object.defineProperty( this.vector2, 'y', {
         get: function() {
             return _vector2_y;
         }
@@ -411,21 +418,27 @@ var _Math = function( options ) {
         }
     });
 
-    const _vector2_0 = _0.subarray( 0, 2 );
+	//const types
+	var _vector2_0 = _0.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
             return _vector2_0;
         }
     });
 
-    const _vector2_1 = _1.subarray( 0, 2 );
+	//const types
+	var _vector2_1 = _1.subarray( 0, 2 );
+	
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
             return _vector2_1;
         }
     });
     
-    const _quaternion_identity = new this.Quaternion( 0, 0, 0, 1 );
+	//const types, removed 'new' keyword
+	var _quaternion_identity = this.Quaternion( 0, 0, 0, 1 );
+	
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
             return _quaternion_identity;
@@ -439,13 +452,13 @@ var _Math = function( options ) {
         } else {
             elements = args;
         }
-
+		
         assert( elements.length >= dim,
                 'Invalid number of elements: ' + args.length );
 
         var matrix = new FLOAT_ARRAY_TYPE( dim );
         for( var i = 0; i < dim; ++ i ) {
-            vector[i] = elements[i];
+            matrix[i] = elements[i];
         }
         
         return matrix;
@@ -475,7 +488,8 @@ var _Math = function( options ) {
         }
         
     };
-
+	
+	//Constructor
     this.Matrix2 = function() {
         if( 0 === arguments.length ) {
             return Matrix( 4, [0, 0,
@@ -486,6 +500,11 @@ var _Math = function( options ) {
     };
     
     this.matrix2 = {
+	
+		clear: matrix.clear,
+        
+        equal: matrix.equal,
+		
         translate: function() {
             if( 0 === arguments.length ) {
                 return Matrix( 4, that.matrix2.identity );
@@ -493,8 +512,10 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-//                return Matrix( 4, [] );
-            // TODO                
+				return Matrix( 4, [1 , x,
+								   0 , y] );
+//				return Matrix( 4, [] );
+			//	Test
             } else {
                 return Matrix( 4, arguments );       
             }
@@ -508,8 +529,10 @@ var _Math = function( options ) {
                 var v = arguments[0];
                 var x = v[0],
                     y = v[1];
-//                return Matrix( 4, [] );
-            // TODO                
+				return Matrix( 4, [x, 0,
+								   0, y] );
+//				return Matrix( 4, [] );
+            // Test                
             } else {
                 return Matrix( 4, arguments );
             }
@@ -522,14 +545,15 @@ var _Math = function( options ) {
             } else if( 1 === arguments.length ) {
                 var v = arguments[0];
                 var r = v[0];
-//                return Matrix( 4, [] );
+//              return Matrix( 4, [] );
+			// Todo (Quaternion = w + xi + yj + zk)
             } else {
                 return Matrix( 4, arguments );
             }
         }
     };
     
-
+// add & subtract functions for 3 x 3?
     this.Matrix3 = function() {
         if( 0 === arguments.length ) {
             return Matrix( 9, [0, 0, 0,
@@ -541,19 +565,36 @@ var _Math = function( options ) {
     };
     
     this.matrix3 = {
-    
+		
+		// All matrixies should have these
+		clear: matrix.clear,
+        
+        equal: matrix.equal,
+		
          multiply: function( m1, m2 ) {
             var r = new that.Matrix3();
-            
-            // TODO                
-                
+			
+            r = [m1[1]*m2[1] + m1[2]*m2[4] + m1[3]*m2[7], // 1, 2, 3
+				 m1[1]*m2[2] + m1[2]*m2[5] + m1[3]*m2[8], 
+				 m1[1]*m2[3] + m1[2]*m2[6] + m1[3]*m2[9],
+			
+				 m1[4]*m2[1] + m1[5]*m2[4] + m1[6]*m2[7], 
+				 m1[4]*m2[2] + m1[5]*m2[5] + m1[6]*m2[8], // 4, 5, 6
+				 m1[4]*m2[3] + m1[5]*m2[6] + m1[6]*m2[9],
+				 
+				 m1[7]*m2[1] + m1[8]*m2[4] + m1[9]*m2[7], 
+				 m1[7]*m2[2] + m1[8]*m2[5] + m1[9]*m2[8],
+				 m1[7]*m2[3] + m1[8]*m2[6] + m1[9]*m2[9]];// 7, 8, 9
+//			Test
+
             return r;
         },
         
         imultiply: function( m1, m2 ) {
             var r = new that.Matrix3( m1 );
             
-            // TODO                
+			// Logic (?)
+//			TODO                
                 
             return r;
         },
@@ -654,49 +695,48 @@ var _Math = function( options ) {
 
         multiply: function( m1, m2 ) {
             var r = new that.Matrix4();
-            
-            r[0] = a[0]*b[0] + a[1]*b[4] + a[2]*b[8] + a[3]*b[12];
-            r[1] = a[0]*b[1] + a[1]*b[5] + a[2]*b[9] + a[3]*b[13];
-            r[2] = a[0]*b[2] + a[1]*b[6] + a[2]*b[10] + a[3]*b[14];
-            r[3] = a[0]*b[3] + a[1]*b[7] + a[2]*b[11] + a[3]*b[15];            
-            r[4] = a[4]*b[0] + a[5]*b[4] + a[6]*b[8] + a[7]*b[12];
-            r[5] = a[4]*b[1] + a[5]*b[5] + a[6]*b[9] + a[7]*b[13];
-            r[6] = a[4]*b[2] + a[5]*b[6] + a[6]*b[10] + a[7]*b[14];
-            r[7] = a[4]*b[3] + a[5]*b[7] + a[6]*b[11] + a[7]*b[15];
-            r[8] = a[8]*b[0] + a[9]*b[4] + a[10]*b[8] + a[11]*b[12];
-            r[9] = a[8]*b[1] + a[9]*b[5] + a[10]*b[9] + a[11]*b[13];
-            r[10] = a[8]*b[2] + a[9]*b[6] + a[10]*b[10] + a[11]*b[14];
-            r[11] = a[8]*b[3] + a[9]*b[7] + a[10]*b[11] + a[11]*b[15];
-            r[12] = a[12]*b[0] + a[13]*b[4] + a[14]*b[8] + a[15]*b[12];
-            r[13] = a[12]*b[1] + a[13]*b[5] + a[14]*b[9] + a[15]*b[13];
-            r[14] = a[12]*b[2] + a[13]*b[6] + a[14]*b[10] + a[15]*b[14];
-            r[15] = a[12]*b[3] + a[13]*b[7] + a[14]*b[11] + a[15]*b[15];
+			
+            r[0] = m1[0]*m2[0] + m1[1]*m2[4] + m1[2]*m2[8] + m1[3]*m2[12];
+            r[1] = m1[0]*m2[1] + m1[1]*m2[5] + m1[2]*m2[9] + m1[3]*m2[13];
+            r[2] = m1[0]*m2[2] + m1[1]*m2[6] + m1[2]*m2[10] + m1[3]*m2[14];
+            r[3] = m1[0]*m2[3] + m1[1]*m2[7] + m1[2]*m2[11] + m1[3]*m2[15];            
+            r[4] = m1[4]*m2[0] + m1[5]*m2[4] + m1[6]*m2[8] + m1[7]*m2[12];
+            r[5] = m1[4]*m2[1] + m1[5]*m2[5] + m1[6]*m2[9] + m1[7]*m2[13];
+            r[6] = m1[4]*m2[2] + m1[5]*m2[6] + m1[6]*m2[10] + m1[7]*m2[14];
+            r[7] = m1[4]*m2[3] + m1[5]*m2[7] + m1[6]*m2[11] + m1[7]*m2[15];
+            r[8] = m1[8]*m2[0] + m1[9]*m2[4] + m1[10]*m2[8] + m1[11]*m2[12];
+            r[9] = m1[8]*m2[1] + m1[9]*m2[5] + m1[10]*m2[9] + m1[11]*m2[13];
+            r[10] = m1[8]*m2[2] + m1[9]*m2[6] + m1[10]*m2[10] + m1[11]*m2[14];
+            r[11] = m1[8]*m2[3] + m1[9]*m2[7] + m1[10]*m2[11] + m1[11]*m2[15];
+            r[12] = m1[12]*m2[0] + m1[13]*m2[4] + m1[14]*m2[8] + m1[15]*m2[12];
+            r[13] = m1[12]*m2[1] + m1[13]*m2[5] + m1[14]*m2[9] + m1[15]*m2[13];
+            r[14] = m1[12]*m2[2] + m1[13]*m2[6] + m1[14]*m2[10] + m1[15]*m2[14];
+            r[15] = m1[12]*m2[3] + m1[13]*m2[7] + m1[14]*m2[11] + m1[15]*m2[15];
 
             return r;
         },
         
         imultiply: function( m1, m2 ) {
             var r = new that.Matrix4( m1 );
-            
-            r[0] = a[0]*b[0] + a[1]*b[4] + a[2]*b[8] + a[3]*b[12];
-            r[1] = a[0]*b[1] + a[1]*b[5] + a[2]*b[9] + a[3]*b[13];
-            r[2] = a[0]*b[2] + a[1]*b[6] + a[2]*b[10] + a[3]*b[14];
-            r[3] = a[0]*b[3] + a[1]*b[7] + a[2]*b[11] + a[3]*b[15];            
-            r[4] = a[4]*b[0] + a[5]*b[4] + a[6]*b[8] + a[7]*b[12];
-            r[5] = a[4]*b[1] + a[5]*b[5] + a[6]*b[9] + a[7]*b[13];
-            r[6] = a[4]*b[2] + a[5]*b[6] + a[6]*b[10] + a[7]*b[14];
-            r[7] = a[4]*b[3] + a[5]*b[7] + a[6]*b[11] + a[7]*b[15];
-            r[8] = a[8]*b[0] + a[9]*b[4] + a[10]*b[8] + a[11]*b[12];
-            r[9] = a[8]*b[1] + a[9]*b[5] + a[10]*b[9] + a[11]*b[13];
-            r[10] = a[8]*b[2] + a[9]*b[6] + a[10]*b[10] + a[11]*b[14];
-            r[11] = a[8]*b[3] + a[9]*b[7] + a[10]*b[11] + a[11]*b[15];
-            r[12] = a[12]*b[0] + a[13]*b[4] + a[14]*b[8] + a[15]*b[12];
-            r[13] = a[12]*b[1] + a[13]*b[5] + a[14]*b[9] + a[15]*b[13];
-            r[14] = a[12]*b[2] + a[13]*b[6] + a[14]*b[10] + a[15]*b[14];
-            r[15] = a[12]*b[3] + a[13]*b[7] + a[14]*b[11] + a[15]*b[15];
+			         
+            r[0] = m1[0]*m2[0] + m1[1]*m2[4] + m1[2]*m2[8] + m1[3]*m2[12];
+            r[1] = m1[0]*m2[1] + m1[1]*m2[5] + m1[2]*m2[9] + m1[3]*m2[13];
+            r[2] = m1[0]*m2[2] + m1[1]*m2[6] + m1[2]*m2[10] + m1[3]*m2[14];
+            r[3] = m1[0]*m2[3] + m1[1]*m2[7] + m1[2]*m2[11] + m1[3]*m2[15];            
+            r[4] = m1[4]*m2[0] + m1[5]*m2[4] + m1[6]*m2[8] + m1[7]*m2[12];
+            r[5] = m1[4]*m2[1] + m1[5]*m2[5] + m1[6]*m2[9] + m1[7]*m2[13];
+            r[6] = m1[4]*m2[2] + m1[5]*m2[6] + m1[6]*m2[10] + m1[7]*m2[14];
+            r[7] = m1[4]*m2[3] + m1[5]*m2[7] + m1[6]*m2[11] + m1[7]*m2[15];
+            r[8] = m1[8]*m2[0] + m1[9]*m2[4] + m1[10]*m2[8] + m1[11]*m2[12];
+            r[9] = m1[8]*m2[1] + m1[9]*m2[5] + m1[10]*m2[9] + m1[11]*m2[13];
+            r[10] = m1[8]*m2[2] + m1[9]*m2[6] + m1[10]*m2[10] + m1[11]*m2[14];
+            r[11] = m1[8]*m2[3] + m1[9]*m2[7] + m1[10]*m2[11] + m1[11]*m2[15];
+            r[12] = m1[12]*m2[0] + m1[13]*m2[4] + m1[14]*m2[8] + m1[15]*m2[12];
+            r[13] = m1[12]*m2[1] + m1[13]*m2[5] + m1[14]*m2[9] + m1[15]*m2[13];
+            r[14] = m1[12]*m2[2] + m1[13]*m2[6] + m1[14]*m2[10] + m1[15]*m2[14];
+            r[15] = m1[12]*m2[3] + m1[13]*m2[7] + m1[14]*m2[11] + m1[15]*m2[15];
 
             return r;
-
         },
      
         translate: function() {
@@ -745,9 +785,9 @@ var _Math = function( options ) {
                     z = v[2],
                     w = v[3];
                 return Matrix( 16, [1 - 2*y*y - 2*z*z, 2*x*y - 2*w*z, 2*x*z + 2*w*y, 0,
-                                    2*x*y + 2*w*z, 1-2*x*x - 2*x*x, 2*y*z + 2*w*x, 0,
-                                    2*x*z - 2*w*y, 2*y*z - 2*w*x, 1-2*x*x - 2*y*y, 0,
-                                    0, 0, 0, 1] );
+									2*x*y + 2*w*z, 1-2*x*x - 2*x*x, 2*y*z + 2*w*x, 0,
+									2*x*z - 2*w*y, 2*y*z - 2*w*x, 1-2*x*x - 2*y*y, 0,
+									0, 0, 0, 1] );
             } else {
                 return Matrix( 16, arguments );
             }
@@ -762,8 +802,8 @@ var _Math = function( options ) {
                 var x = v[0],
                     y = v[1],
                     z = v[2];
-            // TODO
 //                return Matrix( 16, [] );
+			// TODO
             } else {
                 return Matrix( 16, arguments );
             }
@@ -905,32 +945,35 @@ var _Math = function( options ) {
         }
     };
     
-    const _matrix4_identity = new this.Matrix4( [1, 0, 0, 0,
-                                                 0, 1, 0, 0,
-                                                 0, 0, 1, 0,
-                                                 0, 0, 0, 1]);
-    const _matrix3_identity = new this.Matrix3( [1, 0, 0,
-                                                 0, 1, 0,
-                                                 0, 0, 1,
-                                                 0, 0, 0]);
-    const _matrix2_identity = new this.Matrix2( [1, 0,
-                                                 0, 1]);
+	// const type
+    var _matrix4_identity = this.Matrix4( [1, 0, 0, 0,
+                                           0, 1, 0, 0,
+                                           0, 0, 1, 0,
+                                           0, 0, 0, 1] );
+	// const type
+    var _matrix3_identity = this.Matrix3( [1, 0, 0,
+                                           0, 1, 0,
+                                           0, 0, 1] );
+	// const type
+    var _matrix2_identity = this.Matrix2( [1, 0,
+                                           0, 1] );
  
+	//slice() doesn't work with Float32Array
     Object.defineProperty( this.matrix4, 'identity', {
         get: function() {
-            return _matrix4_identity.slice(0);
+			return _matrix4_identity;
         }
     });
 
     Object.defineProperty( this.matrix3, 'identity', {
         get: function() {
-            return _matrix3_identity.slice(0);
+			return _matrix3_identity;
         }
     });
 
     Object.defineProperty( this.matrix2, 'identity', {
         get: function() {
-            return _matrix2_identity.slice(0);
+            return _matrix2_identity;
         }
     });
     
@@ -938,7 +981,7 @@ var _Math = function( options ) {
     this.Transform = function(mtype,initial) {
         this.mtype = mtype;
         this.clearStack(initial);
-    }
+    };
     
     this.Transform.prototype = {
 
@@ -1026,6 +1069,6 @@ var _Math = function( options ) {
 
         this.invalidateTop();
     }
-  }
+  };
 
-}  
+};

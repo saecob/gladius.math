@@ -186,32 +186,31 @@
     test( 'Dot Product / Normalize', function() {
         expect( 2 );
 
-        var vec1 = new math.Vector2( [6, 9] );
+        var vec1 = new math.Vector2( [12, -5] );
         deepEqual(
                 math.vector2.normalize( vec1 ),
-                new math.Vector2( [3, 4.5] ),
-                'normalize( [6, 9] ) = [ 3, 4.5 ]'
+                new math.Vector2( [(12/13), (-5/13)] ),
+                'normalize( [12, -5] ) = [ (12/13), (-5/13) ]'
         );
 
         var vec2 = new math.Vector2( [10, 4] );
-        var vec3 = new math.Vector2( [6, 4] );
         deepEqual(
                 math.vector2.dot( math.vector2.normalize( vec1 ), vec2 ),
-                48,
-                ' [ 3, 4.5 ] . [ 10, 4 ] = 48 '
+                (100/13), // Correct to 6 digits
+                ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
         );
     });
     
-    // test( 'Angle()', function() {
-        // expect( 1 );
+    test( 'Angle()', function() {
+        expect( 1 );
 
-        // var vec1 = new math.Vector2( [10, 4] );
-        // var vec2 = new math.Vector2( [6, -4] );
-        // deepEqual(
-                // math.vector2.angle( vec1, vec2 ),
-                // **,
-                // ' Text '
-        // );
-    // });
+        var vec1 = new math.Vector2( [10, 8] );
+        var vec2 = new math.Vector2( [6, 6] );
+        deepEqual(
+                math.vector2.angle( vec1, vec2 ),
+                Math.acos(9/(Math.sqrt(82))), // Correct to 6 digits
+                ' angle( vec1, vec2 ) = acos(9/(Math.sqrt(82)))'
+        );
+    });
 
 }());

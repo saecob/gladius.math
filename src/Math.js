@@ -111,7 +111,8 @@ var _Math = function( options ) {
         
         // Return a Vector(result) with same direction as v having unit length
         normalize: function( v, result ) {
-            for( var i = 0, len = v.length; i < len; ++ i ) {
+            // Need to find |v| not v.length (length of array)
+            for( var i = 0, len = vector.length(v); i < len; ++ i ) {
                 result[i] = v[i] / len;
             }
             
@@ -153,9 +154,9 @@ var _Math = function( options ) {
             var nV2 = that.Vector2();
 
             vector.normalize(v1, nV1);
-            vector.normalize(v2, nV2);      // Logic?
+            vector.normalize(v2, nV2);
 
-            return Math.acos(vector.dot(nV1, nV2));
+            return Math.acos(vector.dot(nV1,nV2));
         },
 
         clear: vector.clear,

@@ -45,23 +45,36 @@ var _Math = function( options ) {
         
         return vector;
     };
-
+    
+    // Functions used by all vector sizes
     var vector = {
 
-        iadd: function( v1, v2 ) {
+        // Vector(v1) + Vector(v2) -> Vector(result)
+        add: function( v1, v2, result ) {
             for( var i = 0; i < v1.length; ++ i ) {
-                v1[i] += v2[i];
+                result[i] += v1[i] + v2[i];
             }
             
-            return v1;
+            return result;
         },
         
+        // Set all elements of v to zero
         clear: function( v ) {
             for( var i = 0; i < v.length; ++ i ) {
                 v[i] = 0;
             }
         },
 
+        // Computes the dot product of v1 and v2
+        dot: function( v1, v2 ) {
+            var res = 0;
+            for( var i = 0; i < v1.length; ++ i) {
+                res += v1[i] * v2[i];
+            }
+            return res;
+        },
+        
+        //Returns true if v1 == v2, false otherwise.
         equal: function( v1, v2 ) {
             if( v1.length != v2.length ) {
                 return false;
@@ -76,43 +89,46 @@ var _Math = function( options ) {
 
             return true;
         },
-
-        imultiply: function( v, s ) {
-            for( var i = 0; i < v.length; ++ i ) {
-                v[i] *= s;
-            }
-            
-            return v;
-        },
-
-        isubtract: function( v1, v2 ) {
-            for( var i = 0; i < v1.length; ++ i ) {
-                v1[i] -= v2[i];
-            }
-            
-            return v1;
-        },
-
-        ilength: function( v ) {
+    
+        // Computes the length of Vector(v)
+        length: function( v ) {
             var va = 0;
             for( var i = 0; i < v.length; ++ i ) {
-                va += v[i]*v[i];
+                va += v[i] * v[i];
             }
             
             return Math.sqrt(va);
         },
-
-
-        inormalize: function( v ) {
-            var vl = vector.ilength(v);
+    
+        // Vector(v) * Scalar(s) -> Vector(result)
+        multiply: function( v, s, result ) {
             for( var i = 0; i < v.length; ++ i ) {
-                v[i] /= vl;
+                result[i] = v[i] * s;
             }
             
-            return v;
-        }
+            return result;
+        },
+        
+        // Return a Vector(result) with same direction as v having unit length
+        normalize: function( v, result ) {
+            for( var i = 0, len = v.length; i < len; ++ i ) {
+                result[i] = v[i] / len;
+            }
+            
+            return result;
+        },
+        
+        // Computes Vector(v1) - Vector(v2) -> Vector(result)
+        subtract: function( v1, v2, result) {
+            for( var i = 0; i < v1.length; ++ i ) {
+                result[i] = v1[i] - v2[i];
+            }
+            
+            return result;
+        }        
     };
 
+    // Constructor
     this.Vector2 = function() {
         if( 0 === arguments.length ) {
             return Vector( 2, [0, 0] );
@@ -122,53 +138,54 @@ var _Math = function( options ) {
     };
     
     this.vector2 = {
-
-        add: function( v1, v2 ) {
-            return that.Vector2( v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2] );
+        
+        // Computes v1 + v2
+        add: function( v1, v2, result ) {
+            result = result || that.Vector2();
+            
+            return vector.add( v1, v2, result );
         },
-
-        iadd: vector.iadd,
-
+        
+        // Computes the angle between v1 and v2
         angle: function( v1, v2 ) {
+            // Angle = acos( |v1| . |v2| )
+            var nV1 = that.Vector2();
+            var nV2 = that.Vector2();
+
+            vector.normalize(v1, nV1);
+            vector.normalize(v2, nV2);      // Logic?
+
+            return Math.acos(vector.dot(nV1, nV2));
         },
 
-        cross: function( v1, v2 ) {
-        },
+        clear: vector.clear,
 
-        dot: function( v1, v2 ) {
-        },
+        dot: vector.dot,
 
         equal: vector.equal,
 
-        length: function( v ) {
-            return Math.sqrt( v[0] * v[0] + v[1] * v[1] );
+        length: vector.length,
+
+        // Computes v * s -> result
+        multiply: function( v, s, result ) {
+            result = result || that.Vector2();
+    
+            return vector.multiply( v, s, result );
         },
-
-        multiply: function( v, s ) {
-            var r = that.Vector2( v );
-
-            for( var i = 0; i < 2; ++ i ) {
-                r[i] *= s;
-            }
+        
+        // Computes a Vector2 with same direction as v having unit length
+        normalize: function( v, result ) {
+            result = result || that.Vector2();
             
-            return r;
+            return vector.normalize( v, result );
         },
 
-        imultiply: vector.imultiply,
-
-        normal: function( v ) {
-        },
-
-        normalize: function( v ) {
-        },
-
-        inormalize: vector.inormalize,
-
-        subtract: function( v1, v2 ) {
-            return that.Vector2( v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2] );
-        },
-
-        isubtract: vector.isubtract
+        // Computes v1 - v2 -> result
+        subtract: function( v1, v2, result ) {
+            result = result || that.Vector2();
+            
+            return vector.subtract( v1, v2, result );
+        }
     };
 
     this.Vector3 = function() {

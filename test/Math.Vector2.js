@@ -20,9 +20,9 @@
     });
 
     test( 'Basic', function() {
-        expect( 5 );
+        expect( 6 );
 
-        var vec2 = new math.Vector2( 1, 2 );
+        var vec2 = new math.Vector2( [1, 2] );
         ok(
                 vec2,
                 'Construct a Vector2 instance'
@@ -33,7 +33,7 @@
         );
         deepEqual(
                 new math.ARRAY_TYPE( [1, 2] ),
-                new math.Vector2( 1, 2 )
+                new math.Vector2( [1, 2] )
         );
         ok(
                 2 === vec2.length,
@@ -43,6 +43,16 @@
                 vec2[0] === 1 && vec2[1] === 2,
                 'vec2 elements are [1, 2]'
         );
+        
+        // Test vector clear
+        var vec1 = new math.Vector2( [17 , 22] );
+        var vec3 = new math.Vector2( [0, 0] );
+        math.vector2.clear(vec1);
+        ok(
+                math.vector2.equal( vec1, vec3 ),
+                vec1[0] + ' vector.clear, set to 0,0|' + vec1[1]
+        );
+        
     });
 
     test( 'Defaults', function() {
@@ -50,7 +60,7 @@
 
         deepEqual(
                 new math.Vector2(),
-                new math.Vector2( 0, 0 ),
+                new math.Vector2( [0, 0] ),
                 'Default vector is the zero vector'
         );
     });
@@ -121,36 +131,36 @@
     test( 'Addition', function() {
         expect( 2 );
 
-        var vec1 = new math.Vector2( 1, 1 );
-        var vec2 = new math.Vector2( 1, 1 );
-        var vec3 = new math.Vector2( 2, 2 );
+        var vec1 = new math.Vector2( [1, 1] );
+        var vec2 = new math.Vector2( [1, 1] );
+        var vec3 = new math.Vector2( [2, 2] );
 
         ok(
                 math.vector2.equal( vec3, math.vector2.add( vec1, vec2 ) ),
                 '(1,1) + (1,1) = (2,2)'
         );
 
-        math.vector2.iadd( vec1, vec2 );
+        var test = math.vector2.add( vec1, vec2 );
         ok(
-                math.vector2.equal( vec1, vec3 ),
-                '(1, 1) += (1, 1)'
+                math.vector2.equal( test, vec3 ),
+                '(1, 1) += (2, 2)'
         );
     });
 
     test( 'Subtraction', function() {
         expect( 2 );
 
-        var vec1 = new math.Vector2( 1, 1 );
-        var vec2 = new math.Vector2( 1, 1 );
-        var vec3 = new math.Vector2( 2, 2 );
+        var vec1 = new math.Vector2( [1, 1] );
+        var vec2 = new math.Vector2( [1, 1] );
+        var vec3 = new math.Vector2( [2, 2] );
         ok(
                 math.vector2.equal( vec1, math.vector2.subtract( vec3, vec2 ) ),
                 '(2, 2) - (1, 1) = (1, 1)'
         );
 
-        math.vector2.isubtract( vec3, vec2 );
+        var test = math.vector2.subtract( vec3, vec2 );
         ok(
-                math.vector2.equal( vec1, vec3 ),
+                math.vector2.equal( vec1, test ),
                 '(2, 2) -= (1, 1)'
         );
     });
@@ -158,19 +168,50 @@
     test( 'Scalar multiplication', function() {
         expect( 2 );
 
-        var vec1 = new math.Vector2( 2, 3 );
+        var vec1 = new math.Vector2( [2, 3] );
         deepEqual(
                 math.vector2.multiply( vec1, 2 ),
-                new math.Vector2( 4, 6 ),
+                new math.Vector2( [4, 6] ),
                 '(2, 3) * 2 = (4, 6)'
         );
 
-        math.vector2.imultiply( vec1, 3 );
+        var test = math.vector2.multiply( vec1, 3 );
         deepEqual(
-                vec1,
-                new math.Vector2( 6, 9 ),
+                test,
+                new math.Vector2( [6, 9] ),
                 '(2, 3) *= 3'
         );
     });
+    
+    test( 'Dot Product / Normalize', function() {
+        expect( 2 );
+
+        var vec1 = new math.Vector2( [6, 9] );
+        deepEqual(
+                math.vector2.normalize( vec1 ),
+                new math.Vector2( [3, 4.5] ),
+                'normalize( [6, 9] ) = [ 3, 4.5 ]'
+        );
+
+        var vec2 = new math.Vector2( [10, 4] );
+        var vec3 = new math.Vector2( [6, 4] );
+        deepEqual(
+                math.vector2.dot( math.vector2.normalize( vec1 ), vec2 ),
+                48,
+                ' [ 3, 4.5 ] . [ 10, 4 ] = 48 '
+        );
+    });
+    
+    // test( 'Angle()', function() {
+        // expect( 1 );
+
+        // var vec1 = new math.Vector2( [10, 4] );
+        // var vec2 = new math.Vector2( [6, -4] );
+        // deepEqual(
+                // math.vector2.angle( vec1, vec2 ),
+                // **,
+                // ' Text '
+        // );
+    // });
 
 }());

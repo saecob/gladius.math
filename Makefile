@@ -9,16 +9,18 @@
 ################################################################################
 
 SRC_DIR := ./src
+TEST_DIR := ./test
 TOOLS_DIR := ./tools
+EXTERNAL_DIR := ./external
 
-CORE_FILE := $(SRC_DIR)/Math.js
+CORE_FILES := $(SRC_DIR)/Math.js $(wildcard $(TEST_DIR)/*.js)
 
 jshint = echo "Linting $(1)" ; node $(TOOLS_DIR)/jshint-cmdline.js $(1)
 
 check-lint: check-lint-all
 
 check-lint-all:
-	@@$(foreach corefile,$(CORE_FILE),echo "-----" ; $(call jshint,$(corefile)) ; )
+	@@$(foreach corefile,$(CORE_FILES),echo "-----" ; $(call jshint,$(corefile)) ; )
 
 submodule:
 	@@git submodule update --init --recursive

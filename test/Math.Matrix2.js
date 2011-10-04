@@ -41,8 +41,7 @@
                 'matrix2 has length 4'
         );
         ok(
-                matrix2[0] === 1 && matrix2[1] === 0 
-				&& matrix2[2] === 0 && matrix2[3] === 1,
+                matrix2[0] === 1 && matrix2[1] === 0 && matrix2[2] === 0 && matrix2[3] === 1,
                 'matrix2 elements are [1, 0, 0, 1]'
         );
     });

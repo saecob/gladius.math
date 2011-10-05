@@ -74,15 +74,18 @@ var _Math = function( options ) {
             return res;
         },
         
-        //Returns true if v1 == v2, false otherwise.
-        equal: function( v1, v2 ) {
+        //Returns true if v1 == v2, false otherwise. 
+        equal: function( v1, v2, e ) {
+            e = e || 0.000001;  // default variance
+            
             if( v1.length != v2.length ) {
                 return false;
             }
             
             var dim = v1.length;
             for( var i = 0; i < dim; ++ i ) {
-                if( v1[i] != v2[i] ) {
+                if ( Math.abs(v1[i] - v2[i]) > e ) {
+                //if( v1[i] != v2[i] ) {
                     return false;
                 }
             }
@@ -189,6 +192,7 @@ var _Math = function( options ) {
         }
     };
 
+    // Constructor
     this.Vector3 = function() {
         if( 0 === arguments.length ) {
             return Vector( 3, [0, 0, 0] );
@@ -199,13 +203,16 @@ var _Math = function( options ) {
 
     this.vector3 = {
 
-        add: function( v1, v2 ) {
-            return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2]];
+        // Computes v1 + v2
+        add: function( v1, v2, result ) {
+            result = result || that.Vector3();
+            
+            return vector.add( v1, v2, result );
         },
 
-        iadd: vector.iadd,
-
+        // Computes the angle between v1 and v2 in radians
         angle: function( v1, v2 ) {
+            
             return Math.acos(
                 (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) /
                 (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2]) *
@@ -213,71 +220,66 @@ var _Math = function( options ) {
             );
         },
 
-        cross: function( v1, v2 ) {
-            return [ v1[1] * v2[2] - v2[1] * v1[2], 
-                     v1[2] * v2[0] - v2[2] * v1[0], 
-                     v1[0] * v2[1] - v2[0] * v1[1] ];
+        clear: vector.clear,
+        
+        // Computes the cross product of v1 and v2
+        cross: function( v1, v2, result ) {
+            result = result || that.Vector3();
+        
+            result[0] = v1[1] * v2[2] - v2[1] * v1[2];
+            result[1] = v1[2] * v2[0] - v2[2] * v1[0];
+            result[2] = v1[0] * v2[1] - v2[0] * v1[1];
+            
+            return result;
         },
 
+        // Computes the dot product of v1 and v2
         dot: function( v1, v2 ) {
             return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
         },
 
         equal: vector.equal,
-        
-        clear: vector.clear,
 
+        // Computes the length of v
         length: function( v ) {
             return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
         },
 
-        multiply: function( v, s ) {
-            if (s.length === 16 ) {
-                return that.vector3.multiply_matrix4(v,s);
-            } else if (s.length === 9 ) {
-                return that.vector3.multiply_matrix3(v,s);
-            }
+        // Computes v * s
+        multiply: function( v, s, result ) {
+            result = result || that.Vector3();
 
-            return [v[0] * s, v[1] * s, v[2] * s];
+            return vector.multiply( v1, v2, result );
         },
 
-        multiply_matrix3: function(v, m, out) {
-            out = out||[];
-
-            out[0] = m[0] * v[0] + m[3] * v[1] + m[6] * v[2];
-            out[1] = m[1] * v[0] + m[4] * v[1] + m[7] * v[2];
-            out[2] = m[2] * v[0] + m[5] * v[1] + m[8] * v[2];
-
-            return out;
-        },
-
-        multiply_matrix4: function (v, m, out) {
-            out = out||[];
-
-            out[0] = m2[0] * m1[0] + m2[4] * m1[1] + m2[8] * m1[2] + m2[12];
-            out[1] = m2[1] * m1[0] + m2[5] * m1[1] + m2[9] * m1[2] + m2[13];
-            out[2] = m2[2] * m1[0] + m2[6] * m1[1] + m2[10] * m1[2] + m2[14];
-
-            return out;
-        },
-
-        imultiply: vector.imultiply,
-
-        normalize: function( v ) {
-            var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        // Computes the normal vector for v1 and v2
+        normal: function( v1, v2, result ) {
+            result = result || that.Vector3();
             
-            return [v[0]/l,v[1]/l,v[2]/l];
+            return Vector3.cross( v1, v2, result );
         },
-
-        inormalize: vector.inormalize,
-
-        subtract: function( v1, v2 ) {
-            return [ v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]];
+        
+        // Computes the unit vector with direction of v
+        normalize: function( v, result ) {
+            result = result || that.Vector3();
+            var len = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+            
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            result[2] = v[2]/len;
+            
+            return result;
         },
-
-        isubtract: vector.isubtract
+        
+        // Computes v1 - v2
+        subtract: function( v1, v2, result ) {
+            result = result || that.Vector3();
+            
+            return vector.subtract( v1, v2, result );
+        }
     };
 
+    // Constructor
     this.Vector4 = function() {
         if( 0 === arguments.length ) {
             return Vector( 4, [0, 0, 0, 0] );
@@ -292,18 +294,16 @@ var _Math = function( options ) {
             return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2], v1[3] + v2[3] ];
         },
 
-        iadd: vector.iadd,
-
         angle: function( v1, v2 ) {
         },
 
+        clear: vector.clear,
+        
         dot: function( v1, v2 ) {
         },
 
         equal: vector.equal,
         
-        clear: vector.clear,
-
         length: function( v ) {
             return Math.sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3] );
         },
@@ -315,31 +315,14 @@ var _Math = function( options ) {
             return [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
         },
         
-        imultiply: vector.imultiply,
-        
-        multiply_matrix4: function( v, m, out ) {
-            out = out || [];
-
-            out[0] = m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12]*v[3];
-            out[1] = m[1]*v[0] + m[5]*v[1] + m[9]*v[2] + m[13]*v[3];
-            out[2] = m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14]*v[3];
-            out[3] = m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3];
-
-            return out;
-        },
-
         normalize: function( v ) {
             var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
             return [v[0]/l,v[1]/l,v[2]/l,v[3]/l];
         },
 
-        inormalize: vector.inormalize,
-
         subtract: function( v1, v2 ) {
             return [ v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2], v1[3] - v2[3] ];
-        },
-
-        isubtract: vector.isubtract
+        }
     };
 
     this.Quaternion = function() {
@@ -354,10 +337,6 @@ var _Math = function( options ) {
 
         length: this.vector4.length,
 
-        normalize: this.vector4.normalize,
-
-        inormalize: this.vector4.inormalize,
-
         multiply: function( q1, q2 ) {
             var r = that.Quaternion();
             
@@ -368,17 +347,8 @@ var _Math = function( options ) {
             
             return r;
         },
-
-        imultiply: function( q1, q2 ) {
-            var t1 = that.Quaternion( q1 );
-            
-            q1[0] = t1[3] * q2[0] + t1[0] * q2[3] + t1[1] * q2[2] - t1[2] * q2[1];   // x
-            q1[1] = t1[3] * q2[1] - t1[0] * q2[2] + t1[1] * q2[3] + t1[2] * q2[0];   // y
-            q1[2] = t1[3] * q2[2] + t1[0] * q2[1] - t1[1] * q2[0] + t1[2] * q2[3];   // z
-            q1[3] = t1[3] * q2[3] - t1[0] * q2[0] - t1[1] * q2[1] - t1[2] * q2[2];   // w
-            
-            return q1;
-        }
+        
+        normalize: this.vector4.normalize
     };
 	
     // Vector Constants

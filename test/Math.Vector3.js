@@ -8,7 +8,7 @@
     var math = null;
 
     // Name of our module
-    module( 'Vector2 Tests', {
+    module( 'Vector3 Tests', {
         setup: function () {
             stop();
             math = new _Math();

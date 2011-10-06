@@ -196,39 +196,39 @@
         );
     });
     
-    // test( 'Dot Product / Normalize', function() {
-        // expect( 2 );
+    test( 'Dot Product / Normalize', function() {
+        expect( 2 );
 
-        // var vec1 = new math.Vector3( [12, -5, 7] );
-        // var den = Math.sqrt(173);
-        // deepEqual(
-                // math.vector3.normalize( vec1 ),
-                // new math.Vector3( [(12/den), (-5/den), (2/den)] ),
-                // 'normalize( [12, -5], 7 ) = [(12/den), (-5/den), (2/den)]'
-        // );
+        var vec1 = new math.Vector3( [12, -5, 7] );
+        var den = Math.sqrt(218);
+        deepEqual(
+                math.vector3.normalize( vec1 ),
+                new math.Vector3( [(6*(Math.sqrt(2/109))), (-5/den), (7/den)] ),
+                'normalize( [12, -5, 7] ) = [(6*(Math.sqrt(2/109))), (-5/den), (7/den)]'
+        );
 
-        // var vec2 = new math.Vector3( [10, 4] );
-        // var cond = math.vector3.dot( math.vector3.normalize( vec1 ), vec2 );
-        // deepEqual(
-                // Math.round ( cond * Math.pow(10,6) ),
-                // Math.round ( (100/13) * Math.pow(10,6) ), // Correct to 6 digits
-                // ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
-        // );
-    // });
+        var vec2 = new math.Vector3( [10, 4, 2] );
+        var cond = math.vector3.dot( math.vector3.normalize( vec1 ), vec2 );
+        deepEqual(
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( (57 * Math.sqrt(2/109)) * Math.pow(10,6) ), // Correct to 6 digits
+                ' [(6*sqrt(2/109), -5/sqrt(218), 7/sqrt(218))] . [ 10, 4, 2 ] = (57 * Math.sqrt(2/109)) '
+        );
+    });
     
-    // test( 'Angle()', function() {
-        // expect( 1 );
+    test( 'Angle()', function() {
+        expect( 1 );
 
-        // var vec1 = new math.Vector3( [10, 8] );
-        // var vec2 = new math.Vector3( [6, 6] );
+        var vec1 = new math.Vector3( [10, 8, 2] );
+        var vec2 = new math.Vector3( [6, 6, 1] );
         
-        // var cond = math.vector3.angle( vec1, vec2 );
-        // var res = Math.acos(9/(Math.sqrt(82)));
-        // deepEqual(
-                // Math.round ( cond * Math.pow(10,6) ),
-                // Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
-                // ' angle( vec1, vec2 ) = acos(9/(Math.sqrt(82)))'
-        // );
-    // });
+        var cond = math.vector3.angle( vec1, vec2 );
+        var res = Math.acos(55/(Math.sqrt(3066)));
+        deepEqual(
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
+                ' angle( vec1, vec2 ) = acos(55/(Math.sqrt(3066)))'
+        );
+    });
 
 }());

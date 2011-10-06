@@ -184,37 +184,25 @@
         );
     });
     
-    // test( 'Cross Product', function() {
-        // expect (1);
-        
-        // var vec1 = new math.Vector4( [3, -3, 1] );
-        // var vec2 = new math.Vector4( [-12, 12, -4] );
-        // deepEqual(
-                // math.vector4.cross( vec1, vec2 ),
-                // new math.Vector4( [0, 0, 0] ),
-                // '[3, -3, 1] X [-12, 12, -4] = [0, 0, 0]'
-        // );
-    // });
-    
-    // test( 'Dot Product / Normalize', function() {
-        // expect( 2 );
+    test( 'Dot Product / Normalize', function() {
+        expect( 2 );
 
-        // var vec1 = new math.Vector4( [12, -5, 7] );
-        // var den = Math.sqrt(173);
-        // deepEqual(
-                // math.vector4.normalize( vec1 ),
-                // new math.Vector4( [(12/den), (-5/den), (2/den)] ),
-                // 'normalize( [12, -5], 7 ) = [(12/den), (-5/den), (2/den)]'
-        // );
+        var vec1 = new math.Vector4( [12, -5, 7, 1] );
+        var den = Math.sqrt(219);
+        deepEqual(
+                math.vector4.normalize( vec1 ),
+                new math.Vector4( [(4*Math.sqrt(3/73)), (-5/den), (7/den), (1/den)] ),
+                'normalize( [12, -5, 7, 1] ) = [(4*Math.sqrt(3/73)), (-5/den), (7/den), (1/den)]'
+        );
 
-        // var vec2 = new math.Vector4( [10, 4] );
-        // var cond = math.vector4.dot( math.vector4.normalize( vec1 ), vec2 );
-        // deepEqual(
-                // Math.round ( cond * Math.pow(10,6) ),
-                // Math.round ( (100/13) * Math.pow(10,6) ), // Correct to 6 digits
-                // ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
-        // );
-    // });
+        var vec2 = new math.Vector4( [10, 4, 2, -9] );
+        var cond = math.vector4.dot( math.vector4.normalize( vec1 ), vec2 );
+        deepEqual(
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( (35*Math.sqrt(3/73)) * Math.pow(10,6) ), // Correct to 6 digits
+                ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
+        );
+    });
     
     // test( 'Angle()', function() {
         // expect( 1 );

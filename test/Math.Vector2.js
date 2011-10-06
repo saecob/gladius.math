@@ -71,22 +71,22 @@
 
         deepEqual(
                 math.vector2.x,
-                new math.Vector2( 1.0, 0.0 ),
+                new math.Vector2( [1.0, 0.0] ),
                 'Vector2.x'
         );
         deepEqual(
                 math.vector2.y,
-                new math.Vector2( 0.0, 1.0 ),
+                new math.Vector2( [0.0, 1.0] ),
                 'Vector2.y'
         );
         deepEqual(
                 math.vector2.zero,
-                new math.Vector2( 0.0, 0.0 ),
+                new math.Vector2( [0.0, 0.0] ),
                 'Vector2.zero'
         );
         deepEqual(
                 math.vector2.one,
-                new math.Vector2( 1.0, 1.0 ),
+                new math.Vector2( [1.0, 1.0] ),
                 'Vector2.one'
         );
     });
@@ -94,7 +94,7 @@
     test( 'Clone', function() {
         expect( 1 );
 
-        var vec1 = new math.Vector2( 0, 1 );
+        var vec1 = new math.Vector2( [0, 1] );
         deepEqual(
                 new math.Vector2( vec1 ),
                 vec1,
@@ -105,9 +105,9 @@
     test( 'Equality', function() {
         expect( 2 );
 
-        var vec1 = new math.Vector2( 1, 1 );
-        var vec2 = new math.Vector2( 1, 1 );
-        var vec3 = new math.Vector2( 2, 3 );
+        var vec1 = new math.Vector2( [1, 1] );
+        var vec2 = new math.Vector2( [1, 1] );
+        var vec3 = new math.Vector2( [2, 3] );
 
         ok(
                 math.vector2.equal( vec1, vec2 ),
@@ -122,7 +122,7 @@
     test( 'Length', function() {
         expect( 1 );
 
-        var vec1 = new math.Vector2( 1, 1 );
+        var vec1 = new math.Vector2( [1, 1] );
         ok(
                 Math.sqrt( 2 ) === math.vector2.length( vec1 ),
                 '|(1, 1)| = sqrt(2)'

@@ -226,9 +226,9 @@ var _Math = function( options ) {
         cross: function( v1, v2, result ) {
             result = result || that.Vector3();
         
-            result[0] = v1[1] * v2[2] - v2[1] * v1[2];
-            result[1] = v1[2] * v2[0] - v2[2] * v1[0];
-            result[2] = v1[0] * v2[1] - v2[0] * v1[1];
+            result[0] = (v1[1] * v2[2]) - (v2[1] * v1[2]);
+            result[1] = (v1[2] * v2[0]) - (v2[2] * v1[0]);
+            result[2] = (v1[0] * v2[1]) - (v2[0] * v1[1]);
             
             return result;
         },
@@ -240,16 +240,13 @@ var _Math = function( options ) {
 
         equal: vector.equal,
 
-        // Computes the length of v
-        length: function( v ) {
-            return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-        },
+        length: vector.length,
 
         // Computes v * s
         multiply: function( v, s, result ) {
             result = result || that.Vector3();
 
-            return vector.multiply( v1, v2, result );
+            return vector.multiply( v, s, result );
         },
 
         // Computes the normal vector for v1 and v2
@@ -262,7 +259,7 @@ var _Math = function( options ) {
         // Computes the unit vector with direction of v
         normalize: function( v, result ) {
             result = result || that.Vector3();
-            var len = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+            var len = vector.length(v);
             
             result[0] = v[0]/len;
             result[1] = v[1]/len;
@@ -290,38 +287,59 @@ var _Math = function( options ) {
     
     this.vector4 = {
 
-        add: function( v1, v2 ) {
-            return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2], v1[3] + v2[3] ];
+        // Computes v1 + v2
+        add: function( v1, v2, result ) {
+            result = result || that.Vector4();
+            
+            result[0] = v1[0] + v2[0];
+            result[1] = v1[1] + v2[1];
+            result[2] = v1[2] + v2[2];
+            result[3] = v1[3] + v2[3];
+            
+            return result;
         },
 
+        // Computes the angle between v1 and v2
         angle: function( v1, v2 ) {
+            // No idea maybe retrun a quaternion?
         },
 
         clear: vector.clear,
         
+        // Computes the dot product of v1 and v2
         dot: function( v1, v2 ) {
+            return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2] + v1[3] * v2[3];
         },
 
         equal: vector.equal,
         
-        length: function( v ) {
-            return Math.sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3] );
-        },
+        length: vector.length,
 
-        multiply: function( v, s ) {
-            if (s.length === 16 ) {
-                return that.vector4.multiply_matrix4(v,s);
-            }
-            return [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+        // Computes v * s
+        multiply: function( v, s, result ) {
+            result = result || that.Vector4();
+            
+            return vector.multiply( v, s, result );
         },
         
-        normalize: function( v ) {
-            var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
-            return [v[0]/l,v[1]/l,v[2]/l,v[3]/l];
+        // Computes a Vector4 with same direction as v having unit length
+        normalize: function( v, result ) {
+            result = result || that.Vector4();
+            var len = vector.length(v);
+            
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            result[2] = v[2]/len;
+            result[3] = v[3]/len;
+            
+            return result;
         },
 
-        subtract: function( v1, v2 ) {
-            return [ v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2], v1[3] - v2[3] ];
+        // Computes v1 - v2
+        subtract: function( v1, v2, result ) {
+            result = result || that.Vector4();
+            
+            return vector.subtract( v1, v2, result );
         }
     };
 

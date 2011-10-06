@@ -66,30 +66,40 @@
         );
     });
 
-    // test( 'Constants', function() {
-        // expect( 4 );
+    test( 'Constants', function() {
+        expect( 6 );
 
-        // deepEqual(
-                // math.vector4.x,
-                // new math.Vector4( [1.0, 0.0, 0.0] ),
-                // 'Vector4.x'
-        // );
-        // deepEqual(
-                // math.vector4.y,
-                // new math.Vector4( [0.0, 1.0, 0.0] ),
-                // 'Vector4.y'
-        // );
-        // deepEqual(
-                // math.vector4.zero,
-                // new math.Vector4( [0.0, 0.0, 0.0] ),
-                // 'Vector4.zero'
-        // );
-        // deepEqual(
-                // math.vector4.one,
-                // new math.Vector4( [1.0, 1.0, 1.0] ),
-                // 'Vector4.one'
-        // );
-    // });
+        deepEqual(
+                math.vector4.x,
+                new math.Vector4( [1, 0, 0, 0] ),
+                'Vector4.x'
+        );
+        deepEqual(
+                math.vector4.y,
+                new math.Vector4( [0, 1, 0, 0] ),
+                'Vector4.y'
+        );
+        deepEqual(
+                math.vector4.z,
+                new math.Vector4( [0, 0, 1, 0] ),
+                'Vector4.y'
+        );
+        deepEqual(
+                math.vector4.w,
+                new math.Vector4( [0, 0, 0, 1] ),
+                'Vector4.y'
+        );
+        deepEqual(
+                math.vector4.zero,
+                new math.Vector4( [0, 0, 0, 0] ),
+                'Vector4.zero'
+        );
+        deepEqual(
+                math.vector4.one,
+                new math.Vector4( [1, 1, 1, 1] ),
+                'Vector4.one'
+        );
+    });
 
     test( 'Clone', function() {
         expect( 1 );
@@ -204,19 +214,19 @@
         );
     });
     
-    // test( 'Angle()', function() {
-        // expect( 1 );
+    test( 'Angle()', function() {
+        expect( 1 );
 
-        // var vec1 = new math.Vector4( [10, 8] );
-        // var vec2 = new math.Vector4( [6, 6] );
+        var vec1 = new math.Vector4( [10, 8, 2, 7] );
+        var vec2 = new math.Vector4( [6, 6, 1, -4] );
         
-        // var cond = math.vector4.angle( vec1, vec2 );
-        // var res = Math.acos(9/(Math.sqrt(82)));
-        // deepEqual(
-                // Math.round ( cond * Math.pow(10,6) ),
-                // Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
-                // ' angle( vec1, vec2 ) = acos(9/(Math.sqrt(82)))'
-        // );
-    // });
+        var cond = math.vector4.angle( vec1, vec2 );
+        var res = Math.acos(82/(Math.sqrt(19313)));
+        deepEqual(
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
+                ' angle( vec1, vec2 ) = acos(82/(Math.sqrt(19313)))'
+        );
+    });
 
 }());

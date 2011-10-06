@@ -66,30 +66,35 @@
         );
     });
 
-    // test( 'Constants', function() {
-        // expect( 4 );
+    test( 'Constants', function() {
+        expect( 5 );
 
-        // deepEqual(
-                // math.vector3.x,
-                // new math.Vector3( [1.0, 0.0, 0.0] ),
-                // 'Vector3.x'
-        // );
-        // deepEqual(
-                // math.vector3.y,
-                // new math.Vector3( [0.0, 1.0, 0.0] ),
-                // 'Vector3.y'
-        // );
-        // deepEqual(
-                // math.vector3.zero,
-                // new math.Vector3( [0.0, 0.0, 0.0] ),
-                // 'Vector3.zero'
-        // );
-        // deepEqual(
-                // math.vector3.one,
-                // new math.Vector3( [1.0, 1.0, 1.0] ),
-                // 'Vector3.one'
-        // );
-    // });
+        deepEqual(
+                math.vector3.x,
+                new math.Vector3( [1, 0, 0] ),
+                'Vector3.x'
+        );
+        deepEqual(
+                math.vector3.y,
+                new math.Vector3( [0, 1, 0] ),
+                'Vector3.y'
+        );
+        deepEqual(
+                math.vector3.z,
+                new math.Vector3( [0, 0, 1] ),
+                'Vector3.y'
+        );
+        deepEqual(
+                math.vector3.zero,
+                new math.Vector3( [0, 0, 0] ),
+                'Vector3.zero'
+        );
+        deepEqual(
+                math.vector3.one,
+                new math.Vector3( [1, 1, 1] ),
+                'Vector3.one'
+        );
+    });
 
     test( 'Clone', function() {
         expect( 1 );

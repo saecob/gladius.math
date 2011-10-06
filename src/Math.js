@@ -301,7 +301,11 @@ var _Math = function( options ) {
 
         // Computes the angle between v1 and v2
         angle: function( v1, v2 ) {
-            // No idea maybe retrun a quaternion?
+            return Math.acos(
+                (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2] + v1[3] * v2[3]) /
+                (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2] + v1[3] * v1[3]) *
+                 Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1] + v2[2] * v2[2] + v2[3] * v2[3]))
+            );
         },
 
         clear: vector.clear,
@@ -369,62 +373,128 @@ var _Math = function( options ) {
         normalize: this.vector4.normalize
     };
 	
-    // Vector Constants
-	var _x = this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    var _y = this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    var _z = this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    var _w = this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    var _0 = this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    var _1 = this.Vector4( 1.0, 1.0, 1.0, 1.0 );
-
+    // ***      Vector2 Constants      ***
     // X-Axis
-	var _vector2_x = _x.subarray( 0, 2 );
     Object.defineProperty( this.vector2, 'x', {
         get: function() {
-            return _vector2_x;
+            return that.Vector2( [1, 0] );
         }
     });
     Object.defineProperty( this.vector2, 'u', {
         get: function() {
-            return _vector2_x;
+            return that.Vector2( [1, 0] );
         }
     });
 	
     // Y-Axis
-	var _vector2_y = _y.subarray( 0, 2 );
 	Object.defineProperty( this.vector2, 'y', {
         get: function() {
-            return _vector2_y;
+            return that.Vector2( [0, 1] );
         }
     });
     Object.defineProperty( this.vector2, 'v', {
         get: function() {
-            return _vector2_y;
+            return that.Vector2( [0, 1] );
         }
     });
 
-    // Zero Vector
-	var _vector2_0 = _0.subarray( 0, 2 );
+    // Zero
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
-            return _vector2_0;
+            return that.Vector2( [0, 0] );
         }
     });
 
-    // Unit (1) Vector
-	var _vector2_1 = _1.subarray( 0, 2 );
+    // Unit
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
-            return _vector2_1;
+            return that.Vector2( [1, 1] );
+        }
+    });
+    
+    // ***      Vector3 Constants      ***
+    // X-Axis
+    Object.defineProperty( this.vector3, 'x', {
+        get: function() {
+            return that.Vector3( [1, 0, 0] );
+        }
+    });
+	
+    // Y-Axis
+	Object.defineProperty( this.vector3, 'y', {
+        get: function() {
+            return that.Vector3( [0, 1, 0] );
+        }
+    });
+    
+    // Z-Axis
+    Object.defineProperty( this.vector3, 'z', {
+        get: function() {
+            return that.Vector3( [0, 0, 1] );
+        }
+    });
+
+    // Zero
+    Object.defineProperty( this.vector3, 'zero', {
+        get: function() {
+            return that.Vector3( [0, 0, 0] );
+        }
+    });
+
+    // Unit
+    Object.defineProperty( this.vector3, 'one', {
+        get: function() {
+            return that.Vector3( [1, 1, 1] );
+        }
+    });
+    
+    // ***      Vector4 Constants      ***
+    // X-Axis
+    Object.defineProperty( this.vector4, 'x', {
+        get: function() {
+            return that.Vector4( [1, 0, 0, 0] );
+        }
+    });
+	
+    // Y-Axis
+	Object.defineProperty( this.vector4, 'y', {
+        get: function() {
+            return that.Vector4( [0, 1, 0, 0] );
+        }
+    });
+    
+    // Z-Axis
+    Object.defineProperty( this.vector4, 'z', {
+        get: function() {
+            return that.Vector4( [0, 0, 1, 0] );
+        }
+    });
+    
+    // W-Axis
+    Object.defineProperty( this.vector4, 'w', {
+        get: function() {
+            return that.Vector4( [0, 0, 0, 1] );
+        }
+    });
+
+    // Zero
+    Object.defineProperty( this.vector4, 'zero', {
+        get: function() {
+            return that.Vector4( [0, 0, 0, 0] );
+        }
+    });
+
+    // Unit
+    Object.defineProperty( this.vector4, 'one', {
+        get: function() {
+            return that.Vector4( [1, 1, 1, 1] );
         }
     });
     
     // Identity Quaternion
-	var _quaternion_identity = this.Quaternion( 0, 0, 0, 1 );
-	
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
-            return _quaternion_identity;
+            return that.Quaternion( [0, 0, 0, 1] );
         }
     });
 //                        ** End Vector Functions **

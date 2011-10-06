@@ -71,22 +71,22 @@
 
         deepEqual(
                 math.vector2.x,
-                new math.Vector2( [1.0, 0.0] ),
+                new math.Vector2( [1, 0] ),
                 'Vector2.x'
         );
         deepEqual(
                 math.vector2.y,
-                new math.Vector2( [0.0, 1.0] ),
+                new math.Vector2( [0, 1] ),
                 'Vector2.y'
         );
         deepEqual(
                 math.vector2.zero,
-                new math.Vector2( [0.0, 0.0] ),
+                new math.Vector2( [0, 0] ),
                 'Vector2.zero'
         );
         deepEqual(
                 math.vector2.one,
-                new math.Vector2( [1.0, 1.0] ),
+                new math.Vector2( [1, 1] ),
                 'Vector2.one'
         );
     });

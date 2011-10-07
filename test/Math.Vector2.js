@@ -7,7 +7,8 @@
 
     var math = null;
 
-    module( 'Math', {
+    // Name of our module
+    module( 'Vector2 Tests', {
         setup: function () {
             stop();
             math = new _Math();
@@ -50,7 +51,7 @@
         math.vector2.clear(vec1);
         ok(
                 math.vector2.equal( vec1, vec3 ),
-                vec1[0] + ' vector.clear, set to 0,0|' + vec1[1]
+                vec1[0] + ' vector.clear, set to 0,0 ' + vec1[1]
         );
         
     });
@@ -68,24 +69,28 @@
     test( 'Constants', function() {
         expect( 4 );
 
+        math.vector2.x[0] = 8.7;
         deepEqual(
                 math.vector2.x,
-                new math.Vector2( 1.0, 0.0 ),
+                new math.Vector2( [1, 0] ),
                 'Vector2.x'
         );
+        math.vector2.y[0] = 22.7;
         deepEqual(
                 math.vector2.y,
-                new math.Vector2( 0.0, 1.0 ),
+                new math.Vector2( [0, 1] ),
                 'Vector2.y'
         );
+        math.vector2.zero[1] = Math.sqrt(87);
         deepEqual(
                 math.vector2.zero,
-                new math.Vector2( 0.0, 0.0 ),
+                new math.Vector2( [0, 0] ),
                 'Vector2.zero'
         );
+        math.vector2.one[0] = -76;
         deepEqual(
                 math.vector2.one,
-                new math.Vector2( 1.0, 1.0 ),
+                new math.Vector2( [1, 1] ),
                 'Vector2.one'
         );
     });
@@ -93,7 +98,7 @@
     test( 'Clone', function() {
         expect( 1 );
 
-        var vec1 = new math.Vector2( 0, 1 );
+        var vec1 = new math.Vector2( [0, 1] );
         deepEqual(
                 new math.Vector2( vec1 ),
                 vec1,
@@ -102,11 +107,13 @@
     });
 
     test( 'Equality', function() {
-        expect( 2 );
+        expect( 3 );
 
-        var vec1 = new math.Vector2( 1, 1 );
-        var vec2 = new math.Vector2( 1, 1 );
-        var vec3 = new math.Vector2( 2, 3 );
+        var vec1 = new math.Vector2( [1, 1.00000000001] );
+        var vec2 = new math.Vector2( [1, 1] );
+        var vec3 = new math.Vector2( [2, 3] );
+        
+        var vec4 = new math.Vector2( [2.000002, 3.000002] );
 
         ok(
                 math.vector2.equal( vec1, vec2 ),
@@ -116,12 +123,17 @@
                 !math.vector2.equal( vec1, vec3 ),
                 'Two different vectors are not equal'
         );
+        deepEqual(
+                math.vector2.equal( vec3, vec4 ),
+                false,
+                'e = 0.000001'
+        );
     });
 
     test( 'Length', function() {
         expect( 1 );
 
-        var vec1 = new math.Vector2( 1, 1 );
+        var vec1 = new math.Vector2( [1, 1] );
         ok(
                 Math.sqrt( 2 ) === math.vector2.length( vec1 ),
                 '|(1, 1)| = sqrt(2)'
@@ -184,7 +196,7 @@
     });
     
     test( 'Dot Product / Normalize', function() {
-        expect( 2 );
+        expect( 3 );
 
         var vec1 = new math.Vector2( [12, -5] );
         deepEqual(
@@ -194,22 +206,42 @@
         );
 
         var vec2 = new math.Vector2( [10, 4] );
+        var cond = math.vector2.dot( math.vector2.normalize( vec1 ), vec2 );
         deepEqual(
-                math.vector2.dot( math.vector2.normalize( vec1 ), vec2 ),
-                (100/13), // Correct to 6 digits
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( (100/13) * Math.pow(10,6) ), // Correct to 6 digits
                 ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
+        );
+        
+        // Normalized vector
+        var isNormalized = new math.Vector2( [ 1/Math.sqrt(2), 1/Math.sqrt(2) ] );
+        deepEqual (
+                math.vector2.normalize( isNormalized ),
+                isNormalized,
+                'Normalized vector is already normalized' 
         );
     });
     
     test( 'Angle()', function() {
-        expect( 1 );
+        expect( 2 );
 
         var vec1 = new math.Vector2( [10, 8] );
         var vec2 = new math.Vector2( [6, 6] );
+        
+        var cond = math.vector2.angle( vec1, vec2 );
+        var res = Math.acos(9/(Math.sqrt(82)));
         deepEqual(
-                math.vector2.angle( vec1, vec2 ),
-                Math.acos(9/(Math.sqrt(82))), // Correct to 6 digits
+                Math.round ( cond * Math.pow(10,6) ),
+                Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
                 ' angle( vec1, vec2 ) = acos(9/(Math.sqrt(82)))'
+        );
+        
+        var vec3 = new math.Vector2( [1, 0] );
+        var vec4 = new math.Vector2( [0, 1] );
+        deepEqual(
+                math.vector2.angle(vec3, vec4),
+                (Math.PI/2),
+                ' Right angle axis test = pi/2' 
         );
     });
 

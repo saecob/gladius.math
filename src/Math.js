@@ -74,15 +74,17 @@ var _Math = function( options ) {
             return res;
         },
         
-        //Returns true if v1 == v2, false otherwise.
-        equal: function( v1, v2 ) {
+        //Returns true if v1 == v2, false otherwise. 
+        equal: function( v1, v2, e ) {
+            e = e || 0.000001;  // default variance
+            
             if( v1.length != v2.length ) {
                 return false;
             }
             
             var dim = v1.length;
             for( var i = 0; i < dim; ++ i ) {
-                if( v1[i] != v2[i] ) {
+                if ( Math.abs(v1[i] - v2[i]) > e ) {
                     return false;
                 }
             }
@@ -111,9 +113,9 @@ var _Math = function( options ) {
         
         // Return a Vector(result) with same direction as v having unit length
         normalize: function( v, result ) {
-            // Need to find |v| not v.length (length of array)
-            for( var i = 0, len = vector.length(v); i < len; ++ i ) {
-                result[i] = v[i] / len;
+            var len = v.length;
+            for( var i = 0, abslen = vector.length(v); i < len; ++ i ) {
+                result[i] = v[i] / abslen;
             }
             
             return result;
@@ -177,8 +179,12 @@ var _Math = function( options ) {
         // Computes a Vector2 with same direction as v having unit length
         normalize: function( v, result ) {
             result = result || that.Vector2();
+            var len = vector.length(v);
             
-            return vector.normalize( v, result );
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            
+            return result;
         },
 
         // Computes v1 - v2 -> result
@@ -189,6 +195,7 @@ var _Math = function( options ) {
         }
     };
 
+    // Constructor
     this.Vector3 = function() {
         if( 0 === arguments.length ) {
             return Vector( 3, [0, 0, 0] );
@@ -199,13 +206,16 @@ var _Math = function( options ) {
 
     this.vector3 = {
 
-        add: function( v1, v2 ) {
-            return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2]];
+        // Computes v1 + v2
+        add: function( v1, v2, result ) {
+            result = result || that.Vector3();
+            
+            return vector.add( v1, v2, result );
         },
 
-        iadd: vector.iadd,
-
+        // Computes the angle between v1 and v2 in radians
         angle: function( v1, v2 ) {
+            
             return Math.acos(
                 (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]) /
                 (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2]) *
@@ -213,71 +223,63 @@ var _Math = function( options ) {
             );
         },
 
-        cross: function( v1, v2 ) {
-            return [ v1[1] * v2[2] - v2[1] * v1[2], 
-                     v1[2] * v2[0] - v2[2] * v1[0], 
-                     v1[0] * v2[1] - v2[0] * v1[1] ];
+        clear: vector.clear,
+        
+        // Computes the cross product of v1 and v2
+        cross: function( v1, v2, result ) {
+            result = result || that.Vector3();
+        
+            result[0] = (v1[1] * v2[2]) - (v2[1] * v1[2]);
+            result[1] = (v1[2] * v2[0]) - (v2[2] * v1[0]);
+            result[2] = (v1[0] * v2[1]) - (v2[0] * v1[1]);
+            
+            return result;
         },
 
+        // Computes the dot product of v1 and v2
         dot: function( v1, v2 ) {
             return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
         },
 
         equal: vector.equal,
-        
-        clear: vector.clear,
 
-        length: function( v ) {
-            return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        length: vector.length,
+
+        // Computes v * s
+        multiply: function( v, s, result ) {
+            result = result || that.Vector3();
+
+            return vector.multiply( v, s, result );
         },
 
-        multiply: function( v, s ) {
-            if (s.length === 16 ) {
-                return that.vector3.multiply_matrix4(v,s);
-            } else if (s.length === 9 ) {
-                return that.vector3.multiply_matrix3(v,s);
-            }
-
-            return [v[0] * s, v[1] * s, v[2] * s];
-        },
-
-        multiply_matrix3: function(v, m, out) {
-            out = out||[];
-
-            out[0] = m[0] * v[0] + m[3] * v[1] + m[6] * v[2];
-            out[1] = m[1] * v[0] + m[4] * v[1] + m[7] * v[2];
-            out[2] = m[2] * v[0] + m[5] * v[1] + m[8] * v[2];
-
-            return out;
-        },
-
-        multiply_matrix4: function (v, m, out) {
-            out = out||[];
-
-            out[0] = m2[0] * m1[0] + m2[4] * m1[1] + m2[8] * m1[2] + m2[12];
-            out[1] = m2[1] * m1[0] + m2[5] * m1[1] + m2[9] * m1[2] + m2[13];
-            out[2] = m2[2] * m1[0] + m2[6] * m1[1] + m2[10] * m1[2] + m2[14];
-
-            return out;
-        },
-
-        imultiply: vector.imultiply,
-
-        normalize: function( v ) {
-            var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        // Computes the normal vector for v1 and v2
+        normal: function( v1, v2, result ) {
+            result = result || that.Vector3();
             
-            return [v[0]/l,v[1]/l,v[2]/l];
+            return Vector3.cross( v1, v2, result );
         },
-
-        inormalize: vector.inormalize,
-
-        subtract: function( v1, v2 ) {
-            return [ v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]];
+        
+        // Computes the unit vector with direction of v
+        normalize: function( v, result ) {
+            result = result || that.Vector3();
+            var len = vector.length(v);
+            
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            result[2] = v[2]/len;
+            
+            return result;
         },
-
-        isubtract: vector.isubtract
+        
+        // Computes v1 - v2
+        subtract: function( v1, v2, result ) {
+            result = result || that.Vector3();
+            
+            return vector.subtract( v1, v2, result );
+        }
     };
 
+    // Constructor
     this.Vector4 = function() {
         if( 0 === arguments.length ) {
             return Vector( 4, [0, 0, 0, 0] );
@@ -288,58 +290,64 @@ var _Math = function( options ) {
     
     this.vector4 = {
 
-        add: function( v1, v2 ) {
-            return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2], v1[3] + v2[3] ];
+        // Computes v1 + v2
+        add: function( v1, v2, result ) {
+            result = result || that.Vector4();
+            
+            result[0] = v1[0] + v2[0];
+            result[1] = v1[1] + v2[1];
+            result[2] = v1[2] + v2[2];
+            result[3] = v1[3] + v2[3];
+            
+            return result;
         },
 
-        iadd: vector.iadd,
-
+        // Computes the angle between v1 and v2
         angle: function( v1, v2 ) {
+            return Math.acos(
+                (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2] + v1[3] * v2[3]) /
+                (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1] + v1[2] * v1[2] + v1[3] * v1[3]) *
+                 Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1] + v2[2] * v2[2] + v2[3] * v2[3]))
+            );
         },
 
+        clear: vector.clear,
+        
+        // Computes the dot product of v1 and v2
         dot: function( v1, v2 ) {
+            return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2] + v1[3] * v2[3];
         },
 
         equal: vector.equal,
         
-        clear: vector.clear,
+        length: vector.length,
 
-        length: function( v ) {
-            return Math.sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3] );
-        },
-
-        multiply: function( v, s ) {
-            if (s.length === 16 ) {
-                return that.vector4.multiply_matrix4(v,s);
-            }
-            return [v[0] * s, v[1] * s, v[2] * s, v[3] * s];
+        // Computes v * s
+        multiply: function( v, s, result ) {
+            result = result || that.Vector4();
+            
+            return vector.multiply( v, s, result );
         },
         
-        imultiply: vector.imultiply,
-        
-        multiply_matrix4: function( v, m, out ) {
-            out = out || [];
-
-            out[0] = m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12]*v[3];
-            out[1] = m[1]*v[0] + m[5]*v[1] + m[9]*v[2] + m[13]*v[3];
-            out[2] = m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14]*v[3];
-            out[3] = m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3];
-
-            return out;
+        // Computes a Vector4 with same direction as v having unit length
+        normalize: function( v, result ) {
+            result = result || that.Vector4();
+            var len = vector.length(v);
+            
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            result[2] = v[2]/len;
+            result[3] = v[3]/len;
+            
+            return result;
         },
 
-        normalize: function( v ) {
-            var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
-            return [v[0]/l,v[1]/l,v[2]/l,v[3]/l];
-        },
-
-        inormalize: vector.inormalize,
-
-        subtract: function( v1, v2 ) {
-            return [ v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2], v1[3] - v2[3] ];
-        },
-
-        isubtract: vector.isubtract
+        // Computes v1 - v2
+        subtract: function( v1, v2, result ) {
+            result = result || that.Vector4();
+            
+            return vector.subtract( v1, v2, result );
+        }
     };
 
     this.Quaternion = function() {
@@ -354,10 +362,6 @@ var _Math = function( options ) {
 
         length: this.vector4.length,
 
-        normalize: this.vector4.normalize,
-
-        inormalize: this.vector4.inormalize,
-
         multiply: function( q1, q2 ) {
             var r = that.Quaternion();
             
@@ -368,75 +372,132 @@ var _Math = function( options ) {
             
             return r;
         },
-
-        imultiply: function( q1, q2 ) {
-            var t1 = that.Quaternion( q1 );
-            
-            q1[0] = t1[3] * q2[0] + t1[0] * q2[3] + t1[1] * q2[2] - t1[2] * q2[1];   // x
-            q1[1] = t1[3] * q2[1] - t1[0] * q2[2] + t1[1] * q2[3] + t1[2] * q2[0];   // y
-            q1[2] = t1[3] * q2[2] + t1[0] * q2[1] - t1[1] * q2[0] + t1[2] * q2[3];   // z
-            q1[3] = t1[3] * q2[3] - t1[0] * q2[0] - t1[1] * q2[1] - t1[2] * q2[2];   // w
-            
-            return q1;
-        }
+        
+        normalize: this.vector4.normalize
     };
 	
-    // Vector Constants
-	var _x = this.Vector4( 1.0, 0.0, 0.0, 0.0 );
-    var _y = this.Vector4( 0.0, 1.0, 0.0, 0.0 );
-    var _z = this.Vector4( 0.0, 0.0, 1.0, 0.0 );
-    var _w = this.Vector4( 0.0, 0.0, 0.0, 1.0 );
-    var _0 = this.Vector4( 0.0, 0.0, 0.0, 0.0 );
-    var _1 = this.Vector4( 1.0, 1.0, 1.0, 1.0 );
-
+    // ***      Vector2 Constants      ***
     // X-Axis
-	var _vector2_x = _x.subarray( 0, 2 );
     Object.defineProperty( this.vector2, 'x', {
         get: function() {
-            return _vector2_x;
+            return that.Vector2( [1, 0] );
         }
     });
     Object.defineProperty( this.vector2, 'u', {
         get: function() {
-            return _vector2_x;
+            return that.Vector2( [1, 0] );
         }
     });
 	
     // Y-Axis
-	var _vector2_y = _y.subarray( 0, 2 );
 	Object.defineProperty( this.vector2, 'y', {
         get: function() {
-            return _vector2_y;
+            return that.Vector2( [0, 1] );
         }
     });
     Object.defineProperty( this.vector2, 'v', {
         get: function() {
-            return _vector2_y;
+            return that.Vector2( [0, 1] );
         }
     });
 
-    // Zero Vector
-	var _vector2_0 = _0.subarray( 0, 2 );
+    // Zero
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
-            return _vector2_0;
+            return that.Vector2( [0, 0] );
         }
     });
 
-    // Unit (1) Vector
-	var _vector2_1 = _1.subarray( 0, 2 );
+    // Unit
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
-            return _vector2_1;
+            return that.Vector2( [1, 1] );
+        }
+    });
+    
+    // ***      Vector3 Constants      ***
+    // X-Axis
+    Object.defineProperty( this.vector3, 'x', {
+        get: function() {
+            return that.Vector3( [1, 0, 0] );
+        }
+    });
+	
+    // Y-Axis
+	Object.defineProperty( this.vector3, 'y', {
+        get: function() {
+            return that.Vector3( [0, 1, 0] );
+        }
+    });
+    
+    // Z-Axis
+    Object.defineProperty( this.vector3, 'z', {
+        get: function() {
+            return that.Vector3( [0, 0, 1] );
+        }
+    });
+
+    // Zero
+    Object.defineProperty( this.vector3, 'zero', {
+        get: function() {
+            return that.Vector3( [0, 0, 0] );
+        }
+    });
+
+    // Unit
+    Object.defineProperty( this.vector3, 'one', {
+        get: function() {
+            return that.Vector3( [1, 1, 1] );
+        }
+    });
+    
+    // ***      Vector4 Constants      ***
+    // X-Axis
+    Object.defineProperty( this.vector4, 'x', {
+        get: function() {
+            return that.Vector4( [1, 0, 0, 0] );
+        }
+    });
+	
+    // Y-Axis
+	Object.defineProperty( this.vector4, 'y', {
+        get: function() {
+            return that.Vector4( [0, 1, 0, 0] );
+        }
+    });
+    
+    // Z-Axis
+    Object.defineProperty( this.vector4, 'z', {
+        get: function() {
+            return that.Vector4( [0, 0, 1, 0] );
+        }
+    });
+    
+    // W-Axis
+    Object.defineProperty( this.vector4, 'w', {
+        get: function() {
+            return that.Vector4( [0, 0, 0, 1] );
+        }
+    });
+
+    // Zero
+    Object.defineProperty( this.vector4, 'zero', {
+        get: function() {
+            return that.Vector4( [0, 0, 0, 0] );
+        }
+    });
+
+    // Unit
+    Object.defineProperty( this.vector4, 'one', {
+        get: function() {
+            return that.Vector4( [1, 1, 1, 1] );
         }
     });
     
     // Identity Quaternion
-	var _quaternion_identity = this.Quaternion( 0, 0, 0, 1 );
-	
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
-            return _quaternion_identity;
+            return that.Quaternion( [0, 0, 0, 1] );
         }
     });
 //                        ** End Vector Functions **

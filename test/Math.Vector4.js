@@ -69,31 +69,37 @@
     test( 'Constants', function() {
         expect( 6 );
 
+        math.vector4.x[0] = -0.88262;
         deepEqual(
                 math.vector4.x,
                 new math.Vector4( [1, 0, 0, 0] ),
                 'Vector4.x'
         );
+        math.vector4.y[1] = -22.998;
         deepEqual(
                 math.vector4.y,
                 new math.Vector4( [0, 1, 0, 0] ),
                 'Vector4.y'
         );
+        math.vector4.z[2] = 7635.22;
         deepEqual(
                 math.vector4.z,
                 new math.Vector4( [0, 0, 1, 0] ),
                 'Vector4.y'
         );
+        math.vector4.w[3] = -0.88262;
         deepEqual(
                 math.vector4.w,
                 new math.Vector4( [0, 0, 0, 1] ),
                 'Vector4.y'
         );
+        math.vector4.zero[3] = 7635.22;
         deepEqual(
                 math.vector4.zero,
                 new math.Vector4( [0, 0, 0, 0] ),
                 'Vector4.zero'
         );
+        math.vector4.one[0] = -0.88262;
         deepEqual(
                 math.vector4.one,
                 new math.Vector4( [1, 1, 1, 1] ),
@@ -113,9 +119,9 @@
     });
 
     test( 'Equality', function() {
-        expect( 2 );
+        expect( 3 );
 
-        var vec1 = new math.Vector4( [1, 1, 1, 1] );
+        var vec1 = new math.Vector4( [1, 1, 1, 1.00000000001] );
         var vec2 = new math.Vector4( [1, 1, 1, 1] );
         var vec3 = new math.Vector4( [2, 3, 4, 5] );
 
@@ -126,6 +132,13 @@
         ok(
                 !math.vector4.equal( vec1, vec3 ),
                 'Two different vectors are not equal'
+        );
+        
+        var vec4 = new math.Vector4( [2.000002, 3.000002, 4.000002, 5.000002] );
+        deepEqual(
+                math.vector4.equal( vec3, vec4 ),
+                false,
+                'e = 0.000001'
         );
     });
 
@@ -195,7 +208,7 @@
     });
     
     test( 'Dot Product / Normalize', function() {
-        expect( 2 );
+        expect( 3 );
 
         var vec1 = new math.Vector4( [12, -5, 7, 1] );
         var den = Math.sqrt(219);
@@ -212,10 +225,18 @@
                 Math.round ( (35*Math.sqrt(3/73)) * Math.pow(10,6) ), // Correct to 6 digits
                 ' [ (12/13), (-5/13) ] . [ 10, 4 ] = (100/13) '
         );
+        
+        // Normalized vector
+        var isNormalized = new math.Vector4( [ 1/2, 1/2, 1/2, 1/2] );
+        deepEqual (
+                math.vector4.normalize( isNormalized ),
+                isNormalized,
+                'Normalized vector is already normalized' 
+        );
     });
     
     test( 'Angle()', function() {
-        expect( 1 );
+        expect( 2 );
 
         var vec1 = new math.Vector4( [10, 8, 2, 7] );
         var vec2 = new math.Vector4( [6, 6, 1, -4] );
@@ -226,6 +247,14 @@
                 Math.round ( cond * Math.pow(10,6) ),
                 Math.round ( res * Math.pow(10,6) ), // Correct to 6 digits
                 ' angle( vec1, vec2 ) = acos(82/(Math.sqrt(19313)))'
+        );
+        
+        var vec3 = new math.Vector4( [1, 0, 0, 0] );
+        var vec4 = new math.Vector4( [0, 0, 1, 0] );
+        deepEqual(
+                math.vector4.angle(vec3, vec4),
+                (Math.PI/2),
+                ' Right angle axis test = pi/2' 
         );
     });
 

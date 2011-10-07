@@ -85,7 +85,6 @@ var _Math = function( options ) {
             var dim = v1.length;
             for( var i = 0; i < dim; ++ i ) {
                 if ( Math.abs(v1[i] - v2[i]) > e ) {
-                //if( v1[i] != v2[i] ) {
                     return false;
                 }
             }
@@ -114,9 +113,9 @@ var _Math = function( options ) {
         
         // Return a Vector(result) with same direction as v having unit length
         normalize: function( v, result ) {
-            // Need to find |v| not v.length (length of array)
-            for( var i = 0, len = vector.length(v); i < len; ++ i ) {
-                result[i] = v[i] / len;
+            var len = v.length;
+            for( var i = 0, abslen = vector.length(v); i < len; ++ i ) {
+                result[i] = v[i] / abslen;
             }
             
             return result;
@@ -180,8 +179,12 @@ var _Math = function( options ) {
         // Computes a Vector2 with same direction as v having unit length
         normalize: function( v, result ) {
             result = result || that.Vector2();
+            var len = vector.length(v);
             
-            return vector.normalize( v, result );
+            result[0] = v[0]/len;
+            result[1] = v[1]/len;
+            
+            return result;
         },
 
         // Computes v1 - v2 -> result

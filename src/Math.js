@@ -2,6 +2,8 @@
   nomen: false */
 /*global define: false, console: false, window: false, setTimeout: false */
 
+define( function ( require ) {
+
 var _Math = function( options ) {
 
     var that = this;
@@ -1206,3 +1208,7 @@ var _Math = function( options ) {
     }
   };
 };
+
+return _Math;
+
+});

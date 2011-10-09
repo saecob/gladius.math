@@ -11,8 +11,10 @@
     module( 'Vector4 Tests', {
         setup: function () {
             stop();
-            math = new _Math();
-            start();
+            _math.create( {}, function( instance ) {
+                math = instance;
+                start();
+            });
         },
 
         teardown: function () {

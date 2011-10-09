@@ -2,6 +2,8 @@
   nomen: false */
 /*global define: false, console: false, window: false, setTimeout: false */
 
+define( function ( require ) {
+
 var _Math = function( options ) {
 
     var that = this;
@@ -23,7 +25,8 @@ var _Math = function( options ) {
     Object.defineProperty( this, 'ARRAY_TYPE', {
         get: function() {
             return FLOAT_ARRAY_TYPE;
-        }
+        },
+        enumerable: true
     });
 
 //                         ** Vector Functions **
@@ -381,38 +384,44 @@ var _Math = function( options ) {
     Object.defineProperty( this.vector2, 'x', {
         get: function() {
             return that.Vector2( [1, 0] );
-        }
+        },
+        enumerable: true
     });
     Object.defineProperty( this.vector2, 'u', {
         get: function() {
             return that.Vector2( [1, 0] );
-        }
+        },
+        enumerable: true
     });
 	
     // Y-Axis
 	Object.defineProperty( this.vector2, 'y', {
         get: function() {
             return that.Vector2( [0, 1] );
-        }
+        },
+        enumerable: true
     });
     Object.defineProperty( this.vector2, 'v', {
         get: function() {
             return that.Vector2( [0, 1] );
-        }
+        },
+        enumerable: true
     });
 
     // Zero
     Object.defineProperty( this.vector2, 'zero', {
         get: function() {
             return that.Vector2( [0, 0] );
-        }
+        },
+        enumerable: true
     });
 
     // Unit
     Object.defineProperty( this.vector2, 'one', {
         get: function() {
             return that.Vector2( [1, 1] );
-        }
+        },
+        enumerable: true
     });
     
     // ***      Vector3 Constants      ***
@@ -420,35 +429,40 @@ var _Math = function( options ) {
     Object.defineProperty( this.vector3, 'x', {
         get: function() {
             return that.Vector3( [1, 0, 0] );
-        }
+        },
+        enumerable: true
     });
 	
     // Y-Axis
 	Object.defineProperty( this.vector3, 'y', {
         get: function() {
             return that.Vector3( [0, 1, 0] );
-        }
+        },
+        enumerable: true
     });
     
     // Z-Axis
     Object.defineProperty( this.vector3, 'z', {
         get: function() {
             return that.Vector3( [0, 0, 1] );
-        }
+        },
+        enumerable: true
     });
 
     // Zero
     Object.defineProperty( this.vector3, 'zero', {
         get: function() {
             return that.Vector3( [0, 0, 0] );
-        }
+        },
+        enumerable: true
     });
 
     // Unit
     Object.defineProperty( this.vector3, 'one', {
         get: function() {
             return that.Vector3( [1, 1, 1] );
-        }
+        },
+        enumerable: true
     });
     
     // ***      Vector4 Constants      ***
@@ -456,49 +470,56 @@ var _Math = function( options ) {
     Object.defineProperty( this.vector4, 'x', {
         get: function() {
             return that.Vector4( [1, 0, 0, 0] );
-        }
+        },
+        enumerable: true
     });
 	
     // Y-Axis
 	Object.defineProperty( this.vector4, 'y', {
         get: function() {
             return that.Vector4( [0, 1, 0, 0] );
-        }
+        },
+        enumerable: true
     });
     
     // Z-Axis
     Object.defineProperty( this.vector4, 'z', {
         get: function() {
             return that.Vector4( [0, 0, 1, 0] );
-        }
+        },
+        enumerable: true
     });
     
     // W-Axis
     Object.defineProperty( this.vector4, 'w', {
         get: function() {
             return that.Vector4( [0, 0, 0, 1] );
-        }
+        },
+        enumerable: true
     });
 
     // Zero
     Object.defineProperty( this.vector4, 'zero', {
         get: function() {
             return that.Vector4( [0, 0, 0, 0] );
-        }
+        },
+        enumerable: true
     });
 
     // Unit
     Object.defineProperty( this.vector4, 'one', {
         get: function() {
             return that.Vector4( [1, 1, 1, 1] );
-        }
+        },
+        enumerable: true
     });
     
     // Identity Quaternion
     Object.defineProperty( this.quaternion, 'identity', {
         get: function() {
             return that.Quaternion( [0, 0, 0, 1] );
-        }
+        },
+        enumerable: true
     });
 //                        ** End Vector Functions **
     
@@ -1096,19 +1117,22 @@ var _Math = function( options ) {
     Object.defineProperty( this.matrix4, 'identity', {
         get: function() {
 			return _matrix4_identity;
-        }
+        },
+        enumerable: true
     });
 
     Object.defineProperty( this.matrix3, 'identity', {
         get: function() {
 			return _matrix3_identity;
-        }
+        },
+        enumerable: true
     });
 
     Object.defineProperty( this.matrix2, 'identity', {
         get: function() {
             return _matrix2_identity;
-        }
+        },
+        enumerable: true
     });
 //                       ** End Matrix Functions **
     
@@ -1206,3 +1230,7 @@ var _Math = function( options ) {
     }
   };
 };
+
+return _Math;
+
+});

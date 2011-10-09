@@ -41,13 +41,13 @@
                 'requirejs(["math-src"])</' + 'script>');
     }
 
-    var math = this.math || ( this.math = {} );
+    var _math = this._math || ( this._math = {} );
 
-    if ( !math.create ) {
-        math.create = function () {
+    if ( !_math.create ) {
+        _math.create = function () {
             // Hold on to callback, code in math will call it.
-            ( math._waitingCreates ||
-                    ( math._waitingCreates = [] ) ).push( arguments );
+            ( _math._waitingCreates ||
+                    ( _math._waitingCreates = [] ) ).push( arguments );
         };
     }
 

@@ -15,6 +15,6 @@
 (function () {
 
   // Bail if there is already a gladius in the page.
-  if ( this.gladius ) {
+  if ( this._math ) {
     return;
   }

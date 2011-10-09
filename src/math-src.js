@@ -5,13 +5,13 @@ define( function ( require ) {
     var lang = require( './lang' ),
         Implementation = require( './Math' ),
 
-    math, i, args,
+    _math, i, args,
 
     // Expose the API on the global object. Part of if may already
     // exist, mainly gladius.ready from gladius.js. Check tools/wrap.start
     // for protections against overwriting an existing gladius in the page,
     // for when gladius is built for deployment.
-    global = window.math || ( window.math = {} );
+    global = window._math || ( window._math = {} );
 
     /***
      * _Math
@@ -30,7 +30,7 @@ define( function ( require ) {
 
             lang.extend( this, new Implementation() );
 
-            // Let caller know the engine instance is ready.
+            // Let caller know the math instance is ready.
             if (callback) {
                 callback(this);
             }

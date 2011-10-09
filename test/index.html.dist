@@ -5,13 +5,12 @@
     <link rel="stylesheet" href="../tools/qunit/qunit/qunit.css" type="text/css" media="screen">
     <script src="../tools/qunit/qunit/qunit.js"></script>
     <script src="../math.js"></script>
-    <script src="Basic.js"></script>
-    <!--script src="Math.js"></script>
-    
+
+    <script src="Math.js"></script>
     <script src="Math.Vector2.js"></script>
     <script src="Math.Vector3.js"></script>
     <script src="Math.Vector4.js"></script>
-    <script src="Math.Matrix2.js"></script-->
+    <script src="Math.Matrix2.js"></script>
 
     
     <style>

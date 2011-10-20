@@ -12,7 +12,7 @@ define( function ( require ) {
 
         var transform = {
                 
-                $: Transform                              
+                $: Transform                         
 
         };
         

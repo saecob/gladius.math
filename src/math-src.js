@@ -11,6 +11,7 @@ define( function ( require ) {
         matrix2 = require( './matrix/matrix2' ),
         matrix3 = require( './matrix/matrix3' ),
         matrix4 = require( './matrix/matrix4' ),
+        transform = require( './matrix/transform' ),
         
     _math, i, args,
 
@@ -53,6 +54,7 @@ define( function ( require ) {
         var _matrix2 = matrix2( _FLOAT_ARRAY_TYPE );
         var _matrix3 = matrix3( _FLOAT_ARRAY_TYPE );
         var _matrix4 = matrix4( _FLOAT_ARRAY_TYPE );
+        var _transform = transform( _FLOAT_ARRAY_TYPE );
         
         require([], lang.bind(this, function () {
 
@@ -131,7 +133,18 @@ define( function ( require ) {
                 get: function() {
                     return _matrix4;
                 }
-            });  
+            });
+            
+            Object.defineProperty( this, 'Transform', {
+                get: function() {
+                    return _transform.$;
+                }
+            });
+            Object.defineProperty( this, 'transform', {
+                get: function() {
+                    return _transform;
+                }
+            });
 
             // Let caller know the math instance is ready.
             if (callback) {

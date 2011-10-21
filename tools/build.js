@@ -37,7 +37,7 @@
   // not be found by the AST analysis done in the optimizer.
   include: [
             'math',
-            'math-src',
+            'math-src'
            ],
 
   // Wraps the built file in a closure and exports gladius as a global.

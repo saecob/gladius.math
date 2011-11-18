@@ -6,11 +6,12 @@
     <script src="../tools/qunit/qunit/qunit.js"></script>
     <script src="../math.js"></script>
 
-    <script src="Math.js"></script>
-    <script src="Math.Vector2.js"></script>
-    <script src="Math.Vector3.js"></script>
-    <script src="Math.Vector4.js"></script>
-    <script src="Math.Matrix2.js"></script>
+    <script src="math.js"></script>
+    <script src="vector/vector2.js"></script>
+    <script src="vector/vector3.js"></script>
+    <script src="vector/vector4.js"></script>
+    <script src="matrix/matrix2.js"></script>
+    <script src="matrix/transform.js"></script>
 
     
     <style>

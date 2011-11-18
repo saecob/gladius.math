@@ -50,14 +50,16 @@ define( function ( require ) {
                     }
                 },
                 
-                equal: function( m1, m2 ) {
+                equal: function( m1, m2, e ) {
+                    e = e || 0.000001;
+
                     if( m1.length != m2.length ) {
                         return false;
                     }
                     
                     var dim = m1.length;
                     for( var i = 0; i < dim; ++ i ) {
-                        if( m1[i] != m2[i] ) {
+                        if( Math.abs( m1[i] - m2[i] ) > e ) {
                             return false;
                         }
                     }

@@ -48,8 +48,8 @@ define( function ( require ) {
 
                 equal: matrix.equal,
 
-                multiply: function( m1, m2 ) {
-                    var r = Matrix4();
+                multiply: function( m1, m2, result ) {
+                    var r = result || Matrix4();
 
                     r[0] = m1[0]*m2[0] + m1[1]*m2[4] + m1[2]*m2[8] + m1[3]*m2[12];
                     r[1] = m1[0]*m2[1] + m1[1]*m2[5] + m1[2]*m2[9] + m1[3]*m2[13];
@@ -68,7 +68,9 @@ define( function ( require ) {
                     r[14] = m1[12]*m2[2] + m1[13]*m2[6] + m1[14]*m2[10] + m1[15]*m2[14];
                     r[15] = m1[12]*m2[3] + m1[13]*m2[7] + m1[14]*m2[11] + m1[15]*m2[15];
 
-                    return r;
+                    if( !result ) {
+                        return r;
+                    }
                 },
 
                 imultiply: function( m1, m2 ) {
@@ -305,7 +307,7 @@ define( function ( require ) {
             enumerable: true
         });
 
-        return Matrix4;
+        return matrix4;
 
     };
 

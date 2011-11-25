@@ -8,7 +8,7 @@
     var math = null;
 	
 	// Name of our module
-    module( 'matrix4', {
+    module( 'Matrix4', {
         setup: function () {
             stop();
             _math.create( {}, function( instance ) {

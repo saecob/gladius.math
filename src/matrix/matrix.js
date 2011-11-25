@@ -28,15 +28,15 @@ define( function ( require ) {
                 
                 $: Matrix,
           
-                iadd: function( m1, m2 ) {
+                add: function( m1, m2, result ) {
                     for( var i = 0; i < m1.length; ++ i ) {
-                        m1[i] += m2[i];
+                        result[i] += m1[i] + m2[i];
                     }
-//                  Test
-                    return m1;
+
+                    return result;
                 },
                 
-                isubtract: function( m1, m2 ) {
+                subtract: function( m1, m2, result ) {
                     for( var i = 0; i < m1.length; ++ i ) {
                         m1[i] -= m2[i];
                     }

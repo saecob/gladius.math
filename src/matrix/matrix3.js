@@ -29,16 +29,12 @@ define( function ( require ) {
                              m1[6] + m2[6], m1[7] + m2[7], m1[8] + m2[8] ];
                 },
 
-                iadd: matrix.iadd,
-
                 subtract: function( m1, m2 ) {
 //                  Test
                     return [ m1[0] - m2[0], m1[1] - m2[1], m1[2] - m2[2], 
                              m1[3] - m2[3], m1[4] - m2[4], m1[5] - m2[5],
                              m1[6] - m2[6], m1[7] - m2[7], m1[8] - m2[8] ];
                 },
-
-                isubtract: matrix.isubtract,
 
                 clear: matrix.clear,
 
@@ -59,24 +55,6 @@ define( function ( require ) {
                     r[7] = m1[6]*m2[1] + m1[7]*m2[4] + m1[8]*m2[7];
                     r[8] = m1[6]*m2[2] + m1[7]*m2[5] + m1[8]*m2[8];
 
-                    return r;
-                },
-
-                imultiply: function( m1, m2 ) {
-                    var r = Matrix3( m1 );
-
-                    r = [m1[1]*m2[1] + m1[2]*m2[4] + m1[3]*m2[7], // 1, 2, 3
-                         m1[1]*m2[2] + m1[2]*m2[5] + m1[3]*m2[8], 
-                         m1[1]*m2[3] + m1[2]*m2[6] + m1[3]*m2[9],
-
-                         m1[4]*m2[1] + m1[5]*m2[4] + m1[6]*m2[7], 
-                         m1[4]*m2[2] + m1[5]*m2[5] + m1[6]*m2[8], // 4, 5, 6
-                         m1[4]*m2[3] + m1[5]*m2[6] + m1[6]*m2[9],
-
-                         m1[7]*m2[1] + m1[8]*m2[4] + m1[9]*m2[7], 
-                         m1[7]*m2[2] + m1[8]*m2[5] + m1[9]*m2[8],
-                         m1[7]*m2[3] + m1[8]*m2[6] + m1[9]*m2[9]]; // 7, 8, 9
-//                  Test               
                     return r;
                 },
 

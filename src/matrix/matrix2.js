@@ -27,7 +27,8 @@ define( function ( require ) {
                 if (ml.length == 1) {
                     return ml[0];
                 } else {
-                    var temp = matrix.add( result, ml[0], result );
+                    //var temp = matrix.add( result, ml[0], result );
+                    var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.add(temp, ml[i], result); // Could be better?
                         temp = result;
@@ -61,9 +62,9 @@ define( function ( require ) {
             
             inverse: function( m, result ) {
             
-                var determinant = Matrix2.determinant(m);
-                //if (determinant != 0)
-                    //break;
+                var det = matrix2.determinant(m);
+                if (det == 0)
+                    return null;
                 
                 result = result || Matrix2();
                 
@@ -74,10 +75,10 @@ define( function ( require ) {
                 result[1] = m[2];
                 result[2] = temp;
                 
-                result[0] = result[0]/determinant;
-                result[1] = result[1]/determinant;
-                result[2] = result[2]/determinant;
-                result[3] = result[3]/determinant;
+                result[0] = result[0]/det;
+                result[1] = result[1]/det;
+                result[2] = result[2]/det;
+                result[3] = result[3]/det;
                 
                 return result;
             },

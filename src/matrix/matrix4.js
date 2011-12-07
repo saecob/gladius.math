@@ -293,6 +293,18 @@ define( function ( require ) {
                 // efficient transposed inverse 3x3 of a 4x4 matrix
                 normal_matrix3: function(m) {
                     return matrix3.transpose_inline(matrix4.inverse_matrix3(this.mvMatrix));
+                },
+
+                toHTML: function( m ) {
+                    var result = "[ ";
+                    for( var i = 0; i < 4; ++ i ) {
+                        result += "<br>";
+                        for( var j = 0; j < 4; ++ j ) {
+                            result += " (" + m[4*i+j] + ") ";
+                        }
+                    }
+                    result += " ]";
+                    return result;
                 }
 
         };

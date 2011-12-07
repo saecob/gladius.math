@@ -22,11 +22,28 @@
         }
     });
 
-    test( 'Translation', function() {
+    test( 'Translation (return)', function() {
         expect( 1 );
 
         var position = math.Vector3( 1, 2, 3 );
         var result = math.transform.translate( position );
+
+        ok(
+            math.matrix4.equal( result,
+            [ 1, 0, 0, 1,
+              0, 1, 0, 2,
+              0, 0, 1, 3,
+              0, 0, 0, 1 ] ),
+            'Translation matrix is correct'
+        );
+    });
+
+    test( 'Translation (in-place)', function() {
+        expect( 1 );
+
+        var position = math.Vector3( 1, 2, 3 );
+        var result = math.matrix4.identity;
+        math.transform.translate( position, result );
 
         ok(
             math.matrix4.equal( result,
@@ -68,6 +85,25 @@
               0, 0, 2, 0,
               0, 0, 0, 1 ] ),
             'Scale matrix is correct'
+        );
+    });
+
+    test( 'Fixed', function() {
+        expect( 1 );
+
+        var position = math.Vector3( 1, 2, 3 );
+        var rotation = math.vector3.zero;
+        var scale = math.vector3.one;
+        var result = math.transform.fixed( position, rotation, scale );
+
+        ok(
+            math.matrix4.equal( result,
+            [ 1, 0, 0, 1,
+              0, 1, 0, 2,
+              0, 0, 1, 3,
+              0, 0, 0, 1 ]
+            ),
+            'Fixed transform is correct'
         );
     });
 

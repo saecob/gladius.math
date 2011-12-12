@@ -111,16 +111,20 @@
 
         var m1 = math.Matrix2( [ 1, 2, 3, 4 ] );
         var m2 = math.Matrix2( [ 2, 3, 4, 5 ] );
+        var ml = [];
+        
+        ml.push(m1);
+        ml.push(m2);
         
         ok(
-            math.matrix2.equal( math.matrix2.add( m1, m2 ),
+            math.matrix2.equal( math.matrix2.add( ml ),
                 [ 3, 5, 
                   7, 9] ),
             'Addition is correct when returned'
         );
         
         ok(
-            math.matrix2.equal( math.matrix2.subtract( m1, m2 ),
+            math.matrix2.equal( math.matrix2.subtract( ml ),
                 [ -1, -1, 
                   -1, -1] ),
             'Subtraction is correct when returned'
@@ -133,9 +137,13 @@
 
         var m1 = math.Matrix2( [ 1, 2, 3, 4 ] );
         var m2 = math.Matrix2( [ 2, 3, 4, 5 ] );
+        var ml = [];
+        
+        ml.push(m1);
+        ml.push(m2);
         
         ok(
-            math.matrix2.equal( math.matrix2.multiply( m1, m2 ),
+            math.matrix2.equal( math.matrix2.multiply( ml ),
                 [ 10, 13, 
                   22, 29] ),
             'Result is correct when returned'

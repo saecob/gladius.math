@@ -20,124 +20,144 @@ define( function ( require ) {
 
         var matrix3 = {
                 
-                $: Matrix3,
+            $: Matrix3,
 
-                add: function( m1, m2 ) {
-//                  Test
-                    return [ m1[0] + m2[0], m1[1] + m2[1], m1[2] + m2[2], 
-                             m1[3] + m2[3], m1[4] + m2[4], m1[5] + m2[5],
-                             m1[6] + m2[6], m1[7] + m2[7], m1[8] + m2[8] ];
-                },
-
-                subtract: function( m1, m2 ) {
-//                  Test
-                    return [ m1[0] - m2[0], m1[1] - m2[1], m1[2] - m2[2], 
-                             m1[3] - m2[3], m1[4] - m2[4], m1[5] - m2[5],
-                             m1[6] - m2[6], m1[7] - m2[7], m1[8] - m2[8] ];
-                },
-
-                clear: matrix.clear,
-
-                equal: matrix.equal,
-
-                multiply: function( m1, m2 ) {
-                    var r = Matrix3();
-
-                    r[0] = m1[0]*m2[0] + m1[1]*m2[3] + m1[2]*m2[6];
-                    r[1] = m1[0]*m2[1] + m1[1]*m2[4] + m1[2]*m2[7];
-                    r[2] = m1[0]*m2[2] + m1[1]*m2[5] + m1[2]*m2[8];
-                    
-                    r[3] = m1[3]*m2[0] + m1[4]*m2[3] + m1[5]*m2[6];
-                    r[4] = m1[3]*m2[1] + m1[4]*m2[4] + m1[5]*m2[7];
-                    r[5] = m1[3]*m2[2] + m1[4]*m2[5] + m1[5]*m2[8];
-                    
-                    r[6] = m1[6]*m2[0] + m1[7]*m2[3] + m1[8]*m2[6];
-                    r[7] = m1[6]*m2[1] + m1[7]*m2[4] + m1[8]*m2[7];
-                    r[8] = m1[6]*m2[2] + m1[7]*m2[5] + m1[8]*m2[8];
-
-                    return r;
-                },
-
-                translate: function() {
-                    if( 0 === arguments.length ) {
-                        return matrix3.identity;
-                    } else if( 1 === arguments.length ) {
-                        var v = arguments[0];
-                        var x = v[0],
-                        y = v[1],
-                        z = v[2];
-//                      return Matrix( 9, [] );
-                        // TODO                
-                    } else {
-                        return matrix.$( 9, arguments );       
+            add: function( ml, result ) {
+                result = result || Matrix3();
+                
+                if (ml.length == 1) {
+                    return ml[0];
+                } else {
+                    var temp = ml[0];
+                    for (var i = 1; i < ml.length; ++ i) {
+                        result = matrix.add(temp, ml[i], result);
+                        temp = result;
                     }
-                },
+                }
+                return result;
+            },
 
-                scale: function() {
-                    if( 0 === arguments.length ) {
-                        return matrix3.identity;
-                    } else if( 1 === arguments.length ) {
-                        var v = arguments[0];
-                        var x = v[0],
-                        y = v[1],
-                        z = v[2];
-//                      return Matrix( 9, [] );
-                        // TODO                
-                    } else {
-                        return matrix.$( 9, arguments );
+
+            subtract: function( ml, result ) {
+                result = result || Matrix3();
+                
+                if (ml.length == 1)
+                    return ml[0];
+                else {
+                    var temp = ml[0];
+                    for (var i = 1; i < ml.length; ++ i) {
+                        result = matrix.subtract(temp, ml[i], result);
+                        temp = result;
                     }
-                },
+                }
+                return result;
+            },
 
-                rotate: function() {
-                    if( 0 === arguments.length ) {
-                        return matrix3.identity;
-                    } else if( 1 === arguments.length ) {
-                        var v = arguments[0];
-                        var x = v[0],
-                        y = v[1],
-                        z = v[2],
-                        w = v[3];
-//                      return Matrix( 9, [] );
-                        // TODO
-                    } else {
-                        return matrix.$( 9, arguments );
+            clear: matrix.clear,
+
+            equal: matrix.equal,
+
+            determinant: function( m ) {
+
+                return m[0]*(m[4]*m[8] - m[5]*m[7]) 
+                       - m[1]*(m[3]*m[8] - m[5]*m[6]) 
+                       + m[2]*(m[3]*m[7] - m[4]*m[6]);
+            },
+            
+            inverse: function( m, result ) {
+                // Logic
+                var det = matrix3.determinant(m);
+                if (det == 0)
+                    return null;
+                
+                result = result || Matrix3();
+                
+                var temp = m[3];
+                result[3] = m[0];
+                result[0] = temp;
+                temp = m[2];
+                result[1] = m[2];
+                result[2] = temp;
+                
+                result[0] = result[0]/det;
+                result[1] = result[1]/det;
+                result[2] = result[2]/det;
+                result[3] = result[3]/det;
+                
+                return result;
+            },
+            
+            multiply: function( ml, result ) {
+                result = result || Matrix3();
+                
+                if (ml.length == 1)
+                    return ml[0];
+                else {
+
+                    var temp = ml[0];
+                    for (var i = 1; i < ml.length; ++ i) {
+
+                        result[0] = temp[0]*ml[i][0] + temp[1]*ml[i][3] + temp[2]*ml[i][6];
+                        result[1] = temp[0]*ml[i][1] + temp[1]*ml[i][4] + temp[2]*ml[i][7];
+                        result[2] = temp[0]*ml[i][2] + temp[1]*ml[i][5] + temp[2]*ml[i][8];
+
+                        result[3] = temp[3]*ml[i][0] + temp[4]*ml[i][3] + temp[5]*ml[i][6];
+                        result[4] = temp[3]*ml[i][1] + temp[4]*ml[i][4] + temp[5]*ml[i][7];
+                        result[5] = temp[3]*ml[i][2] + temp[4]*ml[i][5] + temp[5]*ml[i][8];
+
+                        result[6] = temp[6]*ml[i][0] + temp[7]*ml[i][3] + temp[8]*ml[i][6];
+                        result[7] = temp[6]*ml[i][1] + temp[7]*ml[i][4] + temp[8]*ml[i][7];
+                        result[8] = temp[6]*ml[i][2] + temp[7]*ml[i][5] + temp[8]*ml[i][8];
+                        
+                        temp = result;
                     }
-                },
+                }
+                return result;
+            },
 
-                transpose: function(mat_in) {
-                    var mat = mat_in.slice(0);
-                    var a01 = mat[1], a02 = mat[2], a12 = mat[5];
+            transpose: function( m, result ) {
+                result = result || Matrix3();
 
-                    mat[1] = mat[3];
-                    mat[2] = mat[6];
-                    mat[3] = a01;
-                    mat[5] = mat[7];
-                    mat[6] = a02;
-                    mat[7] = a12;
+                var a01 = m[1], a02 = m[2], a12 = m[5];
+                
+                result[0] = m[0];
+                result[1] = mat[3];
+                result[2] = mat[6];
+                result[3] = a01;
+                result[4] = m[4];
+                result[5] = mat[7];
+                result[6] = a02;
+                result[7] = a12;
+                result[8] = m[8];
 
-                    return mat;
-                },
-
-                transpose_inline: function(mat) {
-                    var a01 = mat[1], a02 = mat[2], a12 = mat[5];
-
-                    mat[1] = mat[3];
-                    mat[2] = mat[6];
-                    mat[3] = a01;
-                    mat[5] = mat[7];
-                    mat[6] = a02;
-                    mat[7] = a12;
-
-                    return mat;
-                }        
+                return result;
+            }
 
         };
         
+        Object.defineProperty( matrix3, 'zero', {
+            get: function() {
+                return Matrix3( [0, 0, 0,
+                                 0, 0, 0,
+                                 0, 0, 0] );
+            },
+            enumerable: true
+        });
+        
+        Object.defineProperty( matrix3, 'one', {
+            get: function() {
+                return Matrix3( [1, 1, 1,
+                                 1, 1, 1,
+                                 1, 1, 1] );
+            },
+            enumerable: true
+        });
+        
         Object.defineProperty( matrix3, 'identity', {
             get: function() {
-                Matrix3( [1, 0, 0,
-                          0, 1, 0,
-                          0, 0, 1] );
+                return Matrix3( [1, 0, 0,
+                                 0, 1, 0,
+                                 0, 0, 1] );
             },
             enumerable: true
         });

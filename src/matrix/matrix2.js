@@ -27,7 +27,6 @@ define( function ( require ) {
                 if (ml.length == 1) {
                     return ml[0];
                 } else {
-                    //var temp = matrix.add( result, ml[0], result );
                     var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.add(temp, ml[i], result); // Could be better?
@@ -43,7 +42,7 @@ define( function ( require ) {
                 if (ml.length == 1)
                     return ml[0];
                 else {
-                    var temp = matrix.subtract( result, ml[0], result ); // start with negative if 0 matrix?
+                    var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.subtract(temp, ml[i], result); // Could be better?
                         temp = result;
@@ -89,8 +88,7 @@ define( function ( require ) {
                 if (ml.length == 1)
                     return ml[0];
                 else {
-                    // a b  e f  =  ae+bg  af+bh
-                    // c d  g h     ce+dg  cf+dh
+
                     var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result[0] = temp[0]*ml[i][0] + temp[1]*ml[i][2];
@@ -113,7 +111,7 @@ define( function ( require ) {
                 result[3] = m[3];
                 
                 return result;
-            },
+            }
         }
 
         Object.defineProperty( matrix2, 'zero', {

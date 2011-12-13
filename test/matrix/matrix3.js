@@ -50,7 +50,7 @@
         );
     });
 
-    test( 'Default Matrix [0, 0, 0, 0, 0, 0, 0, 0, 0]', function() {
+    test( 'Default Matrix 3x3', function() {
         expect( 1 );
 
         deepEqual(
@@ -171,13 +171,30 @@
     
     test( 'Inverse', function() {
         expect( 1 );
-
-        var m1 = math.Matrix2( [ 1, 2, 3, 4 ] );
+  
+        var m1 = math.Matrix3( [ 0, 0, 1, 0, 1, 0, 1, 0, 0 ] );
+        var test = math.matrix3.inverse( m1 );
         
         ok(
-            math.matrix2.equal( math.matrix2.inverse( m1 ),
-                [ -2, 1, Math.round(3/2 + Math.pow(10,6)), -1/2 ] ),
-            'Inverse is correct when returned'
+            math.matrix3.equal( test,
+                [ 0,0,1,0,1,0,1,0,0 ] ),
+            'Expected: [ 0,0,1,0,1,0,1,0,0 ] || Returned: ' 
+            + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3] + ', '
+            + test[4] + ', ' + test[5]+ ', ' + test[6]+ ', ' + test[7] + ', ' +test[8]
+        );
+
+    });
+    
+    test( 'Transpose', function() {
+        expect( 1 );
+
+        var m1 = math.Matrix3( [ 7, 2, 3, 1, 7, 4, 9, 8, 2 ] );
+        var test = math.matrix3.transpose( m1 );
+        
+        ok(
+            math.matrix3.equal( test,
+                [ 7, 1, 9, 2, 7, 8, 3, 4, 2 ] ),
+            'Expected: [ 7, 1, 9, 2, 7, 8, 3, 4, 2 ] || Returned: ' + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3]
         );
 
     });

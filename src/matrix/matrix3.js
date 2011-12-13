@@ -37,7 +37,6 @@ define( function ( require ) {
                 return result;
             },
 
-
             subtract: function( ml, result ) {
                 result = result || Matrix3();
                 
@@ -65,25 +64,24 @@ define( function ( require ) {
             },
             
             inverse: function( m, result ) {
-                // Logic
                 var det = matrix3.determinant(m);
                 if (det == 0)
                     return null;
                 
                 result = result || Matrix3();
                 
-                var temp = m[3];
-                result[3] = m[0];
-                result[0] = temp;
-                temp = m[2];
-                result[1] = m[2];
-                result[2] = temp;
+                result[0] = (m[8]*m[4] - m[7]*m[5])/det;
+                result[1] = -(m[8]*m[1] - m[7]*[2])/det;
+                result[2] = (m[5]*m[1] - m[4]*m[2])/det;
                 
-                result[0] = result[0]/det;
-                result[1] = result[1]/det;
-                result[2] = result[2]/det;
-                result[3] = result[3]/det;
+                result[3] = -(m[8]*m[3] - m[6]*m[5])/det;
+                result[4] = (m[8]*m[0] - m[6]*m[2])/det;
+                result[5] = -(m[5]*m[0] - m[3]*m[2])/det;
                 
+                result[6] = (m[7]*m[3] - m[6]*m[4])/det;
+                result[7] = -(m[7]*m[0] - m[6]*m[1])/det;
+                result[8] = (m[4]*m[0] - m[3]*m[1])/det;
+
                 return result;
             },
             
@@ -121,11 +119,11 @@ define( function ( require ) {
                 var a01 = m[1], a02 = m[2], a12 = m[5];
                 
                 result[0] = m[0];
-                result[1] = mat[3];
-                result[2] = mat[6];
+                result[1] = m[3];
+                result[2] = m[6];
                 result[3] = a01;
                 result[4] = m[4];
-                result[5] = mat[7];
+                result[5] = m[7];
                 result[6] = a02;
                 result[7] = a12;
                 result[8] = m[8];

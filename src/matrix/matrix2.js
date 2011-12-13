@@ -29,7 +29,7 @@ define( function ( require ) {
                 } else {
                     var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
-                        result = matrix.add(temp, ml[i], result); // Could be better?
+                        result = matrix.add(temp, ml[i], result);
                         temp = result;
                     }
                 }
@@ -44,7 +44,7 @@ define( function ( require ) {
                 else {
                     var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
-                        result = matrix.subtract(temp, ml[i], result); // Could be better?
+                        result = matrix.subtract(temp, ml[i], result);
                         temp = result;
                     }
                 }
@@ -67,17 +67,10 @@ define( function ( require ) {
                 
                 result = result || Matrix2();
                 
-                var temp = m[3];
-                result[3] = m[0];
-                result[0] = temp;
-                temp = m[2];
-                result[1] = m[2];
-                result[2] = temp;
-                
-                result[0] = result[0]/det;
-                result[1] = result[1]/det;
-                result[2] = result[2]/det;
-                result[3] = result[3]/det;
+                result[0] = m[3]/det;
+                result[1] = m[1]*-1/det;
+                result[2] = m[2]*-1/det;
+                result[3] = m[0]/det;
                 
                 return result;
             },

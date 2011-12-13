@@ -168,11 +168,26 @@
         expect( 1 );
 
         var m1 = math.Matrix2( [ 1, 2, 3, 4 ] );
+        var test = math.matrix2.inverse( m1 );
         
         ok(
-            math.matrix2.equal( math.matrix2.inverse( m1 ),
-                [ -2, 1, Math.round(3/2 + Math.pow(10,6)), -1/2 ] ),
-            'Inverse is correct when returned'
+            math.matrix2.equal( test,
+                [ -2, 1, 1.5, -0.5 ] ),
+            'Expected: [ -2, 1, 1.5, -0.5] || Returned: ' + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3]
+        );
+
+    });
+    
+    test( 'Transpose', function() {
+        expect( 1 );
+
+        var m1 = math.Matrix2( [ 7, 2, 1, 4 ] );
+        var test = math.matrix2.transpose( m1 );
+        
+        ok(
+            math.matrix2.equal( test,
+                [ 7, 1, 2, 4 ] ),
+            'Expected: [ 7, 1, 2, 4 ] || Returned: ' + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3]
         );
 
     });

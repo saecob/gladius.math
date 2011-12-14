@@ -23,11 +23,11 @@ define( function ( require ) {
 
             add: function( ml, result ) {
                 result = result || Matrix2();
+                var temp = ml[0];
                 
-                if (ml.length == 1) {
-                    return ml[0];
-                } else {
-                    var temp = ml[0];
+                if (ml.length == 1)
+                    result = temp;
+                else {
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.add(temp, ml[i], result);
                         temp = result;
@@ -38,10 +38,11 @@ define( function ( require ) {
 
             subtract: function( ml, result ) {
                 result = result || Matrix2();
+                var temp = ml[0];
                 
-                if (ml.length == 1)
-                    return ml[0];
-                else {
+                if (ml.length == 1) {
+                    result = temp;
+                } else {
                     var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.subtract(temp, ml[i], result);

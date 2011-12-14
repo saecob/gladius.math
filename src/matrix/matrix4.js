@@ -40,11 +40,11 @@ define( function ( require ) {
             
             subtract: function( ml, result ) {
                 result = result || Matrix4();
+                var temp = ml[0];
                 
                 if (ml.length == 1)
-                    return ml[0];
+                    result = temp;
                 else {
-                    var temp = ml[0];
                     for (var i = 1; i < ml.length; ++ i) {
                         result = matrix.subtract(temp, ml[i], result);
                         temp = result;

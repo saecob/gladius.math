@@ -75,13 +75,21 @@
     });
 
     test( 'Clone Matrix', function() {
-        expect( 1 );
+        expect( 2 );
 
-        var m1 = new math.Matrix4( [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] );
+        var m1 = new math.Matrix4( [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] ),
+            m2 = new math.Matrix4( [1, 0, 0, 0, 0, 2, 3, 4, 5, 6, 7, 8, 0, 0, 0, 1] );
         deepEqual(
                 new math.Matrix4( m1 ),
                 m1,
-                'Clone of Matrix3 is the same'
+                'Clone of Matrix4 is the same'
+        );
+        
+        math.matrix4.clone( m2, m1 );
+        deepEqual(
+                m1,
+                m2,
+                'Clone Method'
         );
     });
 
@@ -189,8 +197,11 @@
         ok(
             math.matrix4.equal( test,
                 [ 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16 ] ),
-            'Expected: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ] || Returned: ' 
-            + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3]
+            'Expected: [ 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16 ] || Returned: ' 
+            + test[0] + ', ' + test[1]+ ', ' + test[2]+ ', ' + test[3] + ', '
+            + test[4] + ', ' + test[5]+ ', ' + test[6]+ ', ' + test[7] + ', '
+            + test[8] + ', ' + test[9]+ ', ' + test[10]+ ', ' + test[11] + ', '
+            + test[12] + ', ' + test[13]+ ', ' + test[14]+ ', ' + test[15]
         );
 
     });

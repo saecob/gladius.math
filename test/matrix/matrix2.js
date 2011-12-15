@@ -79,13 +79,22 @@
     });
 
     test( 'Clone Matrix', function() {
-        expect( 1 );
+        expect( 2 );
 
-        var m1 = new math.Matrix2( [1, 0, 0, 1] );
+        var m1 = new math.Matrix2( [1, 0, 0, 1] ),
+            m2 = new math.Matrix2( [0, 0, 0, 0] );
+        
         deepEqual(
                 new math.Matrix2( m1 ),
                 m1,
                 'Clone of Matrix2 is the same'
+        );
+        
+        math.matrix2.clone(m1, m2);
+        deepEqual(
+                m1,
+                m2,
+                'Clone Method'
         );
     });
 

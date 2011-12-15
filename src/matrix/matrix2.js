@@ -52,6 +52,8 @@ define( function ( require ) {
             },
 
             clear: matrix.clear,
+            
+            clone: matrix.clone,
 
             equal: matrix.equal,
 

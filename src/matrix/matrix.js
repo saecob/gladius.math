@@ -49,6 +49,12 @@ define( function ( require ) {
                 }
             },
             
+            clone: function( src, dest ) {
+                for( var i = 0; i < src.length; ++ i ) {
+                    dest[i] = src[i];
+                }
+            },
+            
             equal: function( m1, m2, e ) {
                 e = e || 0.000001;
 

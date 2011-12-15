@@ -25,7 +25,7 @@
     test( 'Translation', function() {
         expect( 1 );
 
-        var position = math.Vector3( 1, 2, 3 );
+        var position = math.Vector3( [1, 2, 3] );
         var result = math.transform.translate( position );
 
         ok(
@@ -58,7 +58,7 @@
     test( 'Scale', function() {
         expect( 1 );
 
-        var scale = math.Vector3( 2, 2, 2 );
+        var scale = math.Vector3( [2, 2, 2] );
         var result = math.transform.scale( scale );
 
         ok(

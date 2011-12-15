@@ -81,13 +81,21 @@
     });
 
     test( 'Clone Matrix', function() {
-        expect( 1 );
+        expect( 2 );
 
-        var m1 = new math.Matrix3( [1, 0, 0, 0, 1, 0, 0, 0, 1] );
+        var m1 = new math.Matrix3( [1, 0, 0, 0, 1, 0, 0, 0, 1] ),
+            m2 = new math.Matrix3( [0, 0, 2, 3, 4, 5, 6, 0, 0] );;
         deepEqual(
                 new math.Matrix3( m1 ),
                 m1,
                 'Clone of Matrix3 is the same'
+        );
+        
+        math.matrix3.clone(m2, m1);
+        deepEqual(
+                m1,
+                m2,
+                'Clone Method'
         );
     });
 

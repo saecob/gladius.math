@@ -157,10 +157,11 @@ define( function ( require ) {
                     d = (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06),
                     invDet;
 
-                // Calculate the determinant
-                if (!d) { return null; }
-                    invDet = 1 / d;
-
+                // Determinant, throw exception if singular
+                if (!d)
+                    throw 'matrix is singular';
+                
+                invDet = 1 / d;
                 result[0] = (a11 * b11 - a12 * b10 + a13 * b09) * invDet;
                 result[1] = (-a01 * b11 + a02 * b10 - a03 * b09) * invDet;
                 result[2] = (a31 * b05 - a32 * b04 + a33 * b03) * invDet;

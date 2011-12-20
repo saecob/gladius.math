@@ -66,7 +66,7 @@ define( function ( require ) {
             inverse: function( m, result ) {
                 var det = matrix3.determinant(m);
                 if (det == 0)
-                    return null;
+                    throw 'matrix is singular';
                 
                 result = result || Matrix3();
                 

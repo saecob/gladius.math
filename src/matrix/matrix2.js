@@ -64,7 +64,7 @@ define( function ( require ) {
             
                 var det = matrix2.determinant(m);
                 if (det == 0)
-                    return null;
+                    throw 'matrix is singular';
                 
                 result = result || Matrix2();
                 

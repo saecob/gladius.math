@@ -22,7 +22,7 @@ test: false, expect: false, ok: false, notEqual: false, stop, QUnit: false */
         }
     });
 
-    test( 'Translation', function() {
+    test( 'Translation (return)', function() {
         expect( 1 );
 
         var position = math.Vector3( 1, 2, 3 );
@@ -74,5 +74,4 @@ test: false, expect: false, ok: false, notEqual: false, stop, QUnit: false */
             'Scale matrix is correct'
         );
     });
-
 }());

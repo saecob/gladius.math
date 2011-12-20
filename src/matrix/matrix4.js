@@ -180,6 +180,18 @@ define( function ( require ) {
                 result[15] = (a20 * b03 - a21 * b01 + a22 * b00) * invDet;
                 
                 return result;
+            },
+
+            toHTML: function( m ) {
+                var result = "[ ";
+                for( var i = 0; i < 4; ++ i ) {
+                    result += "<br>";
+                    for( var j = 0; j < 4; ++ j ) {
+                        result += " (" + m[4*i+j] + ") ";
+                    }
+                }
+                result += " ]";
+                return result;
             }
 
         };
